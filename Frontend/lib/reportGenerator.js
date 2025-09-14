@@ -28,9 +28,6 @@ export class ReportGenerator {
     // Add cattle information
     this.addCattleInfo(cattleData, userInput)
     
-    // Add predictions section
-    this.addPredictionsSection(predictions)
-    
     // Add recommendations
     this.addRecommendations(predictions)
     
@@ -97,57 +94,9 @@ export class ReportGenerator {
     })
   }
 
-  addPredictionsSection(predictions) {
-    let yPos = 180
-    
-    this.doc.setFontSize(16)
-    this.doc.setFont(undefined, 'bold')
-    this.doc.text(this.t.aiPredictionsAnalysis.toUpperCase(), 20, yPos)
-    yPos += 15
-    
-    // Milk Yield Prediction - Use actual prediction data from Supabase
-    if (predictions?.milkYield || predictions?.milkPrediction) {
-      const milkData = predictions.milkYield || predictions.milkPrediction?.prediction_result
-      
-      this.doc.setFontSize(14)
-      this.doc.setFont(undefined, 'bold')
-      this.doc.text(this.t.milkYieldPrediction, 20, yPos)
-      yPos += 10
-      
-      this.doc.setFontSize(11)
-      this.doc.setFont(undefined, 'normal')
-      this.doc.text(`${this.t.predictedDailyYield}: ${milkData?.predicted_milk_yield || milkData?.prediction || 'N/A'} liters`, 25, yPos)
-      yPos += 8
-      this.doc.text(`${this.t.confidenceLevel}: ${(milkData?.confidence * 100)?.toFixed(1) || 'N/A'}%`, 25, yPos)
-      yPos += 8
-      this.doc.text(`${this.t.timestamp}: ${predictions.milkPrediction?.created_at ? new Date(predictions.milkPrediction.created_at).toLocaleString() : 'N/A'}`, 25, yPos)
-      yPos += 15
-    }
-    
-    // Disease Detection Analysis - Use actual disease prediction data
-    if (predictions?.disease || predictions?.diseasePrediction) {
-      const diseaseData = predictions.disease || predictions.diseasePrediction?.prediction_result
-      
-      this.doc.setFontSize(14)
-      this.doc.setFont(undefined, 'bold')
-      this.doc.text(this.t.diseaseDetectionResults, 20, yPos)
-      yPos += 10
-      
-      this.doc.setFontSize(11)
-      this.doc.setFont(undefined, 'normal')
-      this.doc.text(`${this.t.predictedDisease}: ${diseaseData?.predicted_disease || 'N/A'}`, 25, yPos)
-      yPos += 8
-      this.doc.text(`${this.t.riskLevel}: ${diseaseData?.risk_level || 'N/A'}`, 25, yPos)
-      yPos += 8
-      this.doc.text(`${this.t.confidence}: ${(diseaseData?.confidence * 100)?.toFixed(1) || 'N/A'}%`, 25, yPos)
-      yPos += 8
-      this.doc.text(`${this.t.timestamp}: ${predictions.diseasePrediction?.created_at ? new Date(predictions.diseasePrediction.created_at).toLocaleString() : 'N/A'}`, 25, yPos)
-      yPos += 15
-    }
-  }
 
   addRecommendations(predictions) {
-    let yPos = 260
+    let yPos = 180
     
     // Check if we need a new page
     if (yPos > 250) {
@@ -165,61 +114,138 @@ export class ReportGenerator {
     
     const recommendations = []
     
-    // Add milk yield recommendations from actual predictions
+    // AI-Driven Milk Yield Recommendations
     const milkData = predictions?.milkYield || predictions?.milkPrediction?.prediction_result
     if (milkData?.predicted_milk_yield) {
       const milkYield = parseFloat(milkData.predicted_milk_yield)
-      if (milkYield < 20) {
-        recommendations.push('• Consider improving feed quality and quantity to increase milk yield')
-        recommendations.push('• Monitor for potential health issues affecting milk production')
-        recommendations.push('• Review nutritional requirements and feeding schedule')
+      const confidence = milkData.confidence || 0
+      
+      recommendations.push('=== AI-DRIVEN MILK PRODUCTION RECOMMENDATIONS ===')
+      
+      if (milkYield < 15) {
+        recommendations.push('• URGENT: Low milk yield detected - immediate intervention required')
+        recommendations.push('• Check for mastitis, nutritional deficiencies, or metabolic disorders')
+        recommendations.push('• Increase energy-dense feed and ensure adequate protein intake')
+        recommendations.push('• Monitor body condition score and adjust feeding accordingly')
+      } else if (milkYield < 20) {
+        recommendations.push('• Below average milk yield - optimization opportunities identified')
+        recommendations.push('• Improve feed quality with higher energy and protein content')
+        recommendations.push('• Review mineral supplementation (calcium, phosphorus, magnesium)')
+        recommendations.push('• Assess environmental stress factors (heat, humidity, housing)')
       } else if (milkYield > 30) {
-        recommendations.push('• Excellent milk production! Maintain current feeding and care routine')
-        recommendations.push('• Monitor for signs of metabolic stress due to high production')
-        recommendations.push('• Ensure adequate calcium and energy supplementation')
+        recommendations.push('• Excellent milk production detected - maintain high standards')
+        recommendations.push('• Monitor for metabolic stress and negative energy balance')
+        recommendations.push('• Ensure adequate calcium supplementation to prevent milk fever')
+        recommendations.push('• Implement precision feeding to sustain high production')
       } else {
-        recommendations.push('• Good milk production levels, continue current management')
-        recommendations.push('• Consider gradual improvements in feed quality')
+        recommendations.push('• Good milk production levels - minor optimizations possible')
+        recommendations.push('• Consider gradual feed quality improvements')
+        recommendations.push('• Monitor for seasonal variations and adjust management')
+      }
+      
+      if (confidence < 0.7) {
+        recommendations.push('• Prediction confidence is moderate - collect more data for accuracy')
+        recommendations.push('• Implement daily milk recording for better AI model training')
       }
     }
     
-    // Add disease recommendations from actual predictions
+    // AI-Driven Disease Prevention & Health Recommendations
     const diseaseData = predictions?.disease || predictions?.diseasePrediction?.prediction_result
-    if (diseaseData?.recommendations && Array.isArray(diseaseData.recommendations)) {
-      diseaseData.recommendations.forEach(rec => {
+    const healthScore = predictions?.healthScore || predictions?.cattle?.healthScore
+    
+    recommendations.push('')
+    recommendations.push('=== AI-DRIVEN HEALTH & DISEASE RECOMMENDATIONS ===')
+    
+    if (diseaseData?.predicted_disease && diseaseData.predicted_disease !== 'healthy') {
+      const riskLevel = diseaseData.risk_level
+      const confidence = diseaseData.confidence || 0
+      
+      if (riskLevel === 'high') {
+        recommendations.push('• CRITICAL: High disease risk detected - immediate action required')
+        recommendations.push('• Contact veterinarian immediately for professional diagnosis')
+        recommendations.push('• Isolate animal to prevent disease spread')
+        recommendations.push('• Implement strict biosecurity measures')
+        recommendations.push('• Monitor vital signs every 4-6 hours')
+      } else if (riskLevel === 'medium') {
+        recommendations.push('• MODERATE: Disease risk identified - preventive measures needed')
+        recommendations.push('• Schedule veterinary examination within 24-48 hours')
+        recommendations.push('• Increase monitoring frequency for symptoms')
+        recommendations.push('• Review vaccination schedule and update if necessary')
+        recommendations.push('• Enhance hygiene and sanitation protocols')
+      } else {
+        recommendations.push('• LOW: Minor health concerns detected - preventive care advised')
+        recommendations.push('• Continue regular health monitoring')
+        recommendations.push('• Maintain current preventive health measures')
+        recommendations.push('• Consider nutritional supplements for immune support')
+      }
+      
+      if (confidence > 0.8) {
+        recommendations.push('• High AI confidence in disease prediction - prioritize immediate action')
+      }
+    } else {
+      recommendations.push('• Animal appears healthy according to AI analysis')
+      recommendations.push('• Continue current health management practices')
+      recommendations.push('• Maintain regular preventive care schedule')
+    }
+    
+    // Health Score Based Recommendations
+    if (healthScore) {
+      if (healthScore < 60) {
+        recommendations.push('• POOR health score detected - comprehensive health assessment needed')
+        recommendations.push('• Review all management practices (nutrition, housing, hygiene)')
+        recommendations.push('• Consider blood work and detailed veterinary examination')
+      } else if (healthScore < 80) {
+        recommendations.push('• FAIR health score - room for improvement identified')
+        recommendations.push('• Focus on stress reduction and comfort improvements')
+        recommendations.push('• Optimize nutrition and environmental conditions')
+      } else if (healthScore >= 90) {
+        recommendations.push('• EXCELLENT health score - maintain current management')
+        recommendations.push('• Use as benchmark for other animals in the herd')
+      }
+    }
+    
+    // AI Model Insights and Future Predictions
+    recommendations.push('')
+    recommendations.push('=== AI MODEL INSIGHTS & FUTURE MONITORING ===')
+    recommendations.push('• Continue data collection for improved AI predictions')
+    recommendations.push('• Implement IoT sensors for real-time health monitoring')
+    recommendations.push('• Schedule follow-up AI analysis in 7-14 days')
+    recommendations.push('• Compare predictions with actual outcomes for model validation')
+    
+    // Custom AI recommendations if available
+    if (diseaseData?.ai_recommendations && Array.isArray(diseaseData.ai_recommendations)) {
+      recommendations.push('')
+      recommendations.push('=== CUSTOM AI RECOMMENDATIONS ===')
+      diseaseData.ai_recommendations.forEach(rec => {
         recommendations.push(`• ${rec}`)
       })
-    } else if (diseaseData?.predicted_disease && diseaseData.predicted_disease !== 'healthy') {
-      const riskLevel = diseaseData.risk_level
-      if (riskLevel === 'high') {
-        recommendations.push('• Immediate veterinary consultation recommended')
-        recommendations.push('• Isolate animal and monitor closely')
-        recommendations.push('• Review biosecurity measures')
-      } else if (riskLevel === 'medium') {
-        recommendations.push('• Schedule veterinary checkup within 24-48 hours')
-        recommendations.push('• Monitor symptoms and behavior changes')
-        recommendations.push('• Ensure proper hygiene and sanitation')
-      } else {
-        recommendations.push('• Continue regular monitoring')
-        recommendations.push('• Maintain preventive health measures')
-      }
     }
     
-    // General recommendations
-    if (recommendations.length === 0) {
-      recommendations.push('• Regular veterinary checkups recommended every 3-6 months')
-      recommendations.push('• Monitor daily feed intake and water consumption')
-      recommendations.push('• Maintain clean and comfortable housing conditions')
-      recommendations.push('• Keep detailed records of health and production data')
+    // General best practices
+    if (recommendations.length < 10) {
+      recommendations.push('')
+      recommendations.push('=== GENERAL BEST PRACTICES ===')
+      recommendations.push('• Maintain detailed daily records for AI model improvement')
+      recommendations.push('• Ensure consistent feeding times and quality feed')
+      recommendations.push('• Provide adequate fresh water access (80-120L/day)')
+      recommendations.push('• Monitor environmental conditions (temperature, humidity)')
+      recommendations.push('• Implement regular hoof trimming and health checks')
     }
     
     recommendations.forEach(rec => {
-      const lines = this.doc.splitTextToSize(rec, 170)
-      lines.forEach(line => {
-        this.doc.text(line, 20, yPos)
-        yPos += 6
-      })
-      yPos += 2
+      if (rec.startsWith('===')) {
+        this.doc.setFont(undefined, 'bold')
+        this.doc.text(rec, 20, yPos)
+        this.doc.setFont(undefined, 'normal')
+        yPos += 8
+      } else {
+        const lines = this.doc.splitTextToSize(rec, 170)
+        lines.forEach(line => {
+          this.doc.text(line, 20, yPos)
+          yPos += 6
+        })
+        yPos += 2
+      }
     })
   }
 

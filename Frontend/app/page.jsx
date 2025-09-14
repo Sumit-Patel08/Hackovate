@@ -118,7 +118,7 @@ export default function DairyDashboard() {
   // Use the translation helper function
   // const t = translations[language] // Remove this line
 
-  // Load cattle data on component mount and when user changes
+  // Load cattle data when component mounts or user changes
   useEffect(() => {
     if (user) {
       console.log('=== USER LOGIN DETECTED ===')
@@ -127,6 +127,7 @@ export default function DairyDashboard() {
       console.log('User email:', user.email)
       
       loadCattleData()
+      checkPredictionsData()
       loadLastCattleFormData()
       
       // Set up auto-refresh interval
@@ -146,6 +147,45 @@ export default function DairyDashboard() {
       setSavedCattleId(null)
     }
   }, [user])
+
+  // Function to check predictions table data
+  const checkPredictionsData = async () => {
+    try {
+      const { data: predictions, error } = await supabase
+        .from('predictions')
+        .select('*')
+        .eq('user_id', user.id)
+        .order('created_at', { ascending: false })
+        .limit(10)
+      
+      if (error) {
+        console.error('Error fetching predictions:', error)
+        return
+      }
+      
+      console.log('=== PREDICTIONS TABLE DATA ===')
+      console.log('Predictions table data:', predictions)
+      console.log('Total predictions found:', predictions?.length || 0)
+      
+      if (predictions && predictions.length > 0) {
+        predictions.forEach((pred, index) => {
+          console.log(`Prediction ${index + 1}:`, {
+            id: pred.id,
+            cattle_id: pred.cattle_id,
+            prediction_type: pred.prediction_type,
+            prediction_result: pred.prediction_result,
+            input_data: pred.input_data,
+            confidence: pred.confidence,
+            created_at: pred.created_at
+          })
+        })
+      } else {
+        console.log('No predictions found in database for user:', user.id)
+      }
+    } catch (error) {
+      console.error('Error checking predictions data:', error)
+    }
+  }
 
   const loadCattleData = async () => {
     if (!user) {
@@ -662,8 +702,56 @@ export default function DairyDashboard() {
   }
 
   const totalCattle = cattleData.length
-  const avgYield = totalCattle > 0 ? (cattleData.reduce((sum, cattle) => sum + cattle.dailyYield, 0) / totalCattle).toFixed(1) : "0.0"
-  const healthyAnimals = cattleData.filter((cattle) => cattle.healthScore >= 80).length
+  const avgYield = totalCattle > 0 ? (cattleData.reduce((sum, cattle) => sum + (cattle.dailyYield || 0), 0) / totalCattle).toFixed(1) : "0.0"
+  
+  // Enhanced health score calculation with fallback logic
+  const healthyAnimals = cattleData.filter((cattle) => {
+    console.log('Processing cattle for health:', {
+      cattle_id: cattle.cattle_id,
+      healthScore: cattle.healthScore,
+      health_metrics: cattle.health_metrics,
+      diseasePrediction: cattle.diseasePrediction
+    })
+    
+    // Primary: Use calculated healthScore from predictions
+    if (cattle.healthScore !== undefined && cattle.healthScore !== null) {
+      console.log(`Using healthScore: ${cattle.healthScore} >= 80 = ${cattle.healthScore >= 80}`)
+      return cattle.healthScore >= 80
+    }
+    
+    // Fallback: Calculate health score from available data
+    let calculatedScore = 85 // Default healthy score
+    
+    // Check health metrics if available
+    if (cattle.health_metrics) {
+      const metrics = cattle.health_metrics
+      if (metrics.lameness_score > 2) calculatedScore -= 20
+      if (metrics.appetite_score < 3) calculatedScore -= 15
+      if (metrics.coat_condition < 3) calculatedScore -= 10
+      if (metrics.udder_swelling > 1) calculatedScore -= 25
+    }
+    
+    // Check disease prediction if available
+    if (cattle.diseasePrediction?.prediction_result?.predicted_disease !== 'healthy') {
+      calculatedScore -= 20
+    }
+    
+    // If no specific health data, assume healthy if cattle exists
+    if (!cattle.health_metrics && !cattle.diseasePrediction) {
+      calculatedScore = 85 // Default to healthy
+    }
+    
+    console.log(`Calculated health score: ${calculatedScore} >= 80 = ${calculatedScore >= 80}`)
+    return calculatedScore >= 80
+  }).length
+  
+  console.log('Dashboard Health Calculation Summary:', {
+    totalCattle,
+    cattleDataLength: cattleData.length,
+    cattleIds: cattleData.map(c => c.cattle_id),
+    healthyAnimals,
+    healthPercentage: cattleData.length > 0 ? Math.round((healthyAnimals / cattleData.length) * 100) : 0
+  })
 
   return (
     <ProtectedRoute>
@@ -764,7 +852,7 @@ export default function DairyDashboard() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
               <Card>
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                  <CardTitle className="text-sm font-medium">{t.totalCattle}</CardTitle>
+                  <CardTitle className="text-sm font-medium">{t('totalCattle')}</CardTitle>
                   <Cow className="h-4 w-4 text-muted-foreground" />
                 </CardHeader>
                 <CardContent>
@@ -776,7 +864,7 @@ export default function DairyDashboard() {
               </Card>
               <Card>
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                  <CardTitle className="text-sm font-medium">{t.avgYield}</CardTitle>
+                  <CardTitle className="text-sm font-medium">{t('avgYield')}</CardTitle>
                   <Activity className="h-4 w-4 text-muted-foreground" />
                 </CardHeader>
                 <CardContent>
@@ -793,18 +881,18 @@ export default function DairyDashboard() {
               </Card>
               <Card>
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                  <CardTitle className="text-sm font-medium">{t.healthyAnimals}</CardTitle>
+                  <CardTitle className="text-sm font-medium">{t('healthyAnimals')}</CardTitle>
                   <Heart className="h-4 w-4 text-muted-foreground" />
                 </CardHeader>
                 <CardContent>
                   <div className="text-2xl font-bold">
-                    {cattleData.filter(cattle => (cattle.healthScore || 0) >= 80).length}
+                    {healthyAnimals}
                   </div>
                   <p className="text-xs text-muted-foreground">
                     {cattleData.length > 0 
-                      ? Math.round((cattleData.filter(cattle => (cattle.healthScore || 0) >= 80).length / cattleData.length) * 100)
-                      : 0
-                    }% healthy rate
+                      ? `${healthyAnimals} out of ${cattleData.length} cows healthy`
+                      : "No cattle data available"
+                    }
                   </p>
                 </CardContent>
               </Card>
@@ -817,15 +905,15 @@ export default function DairyDashboard() {
                 <CardHeader>
                   <CardTitle className="flex items-center space-x-2">
                     <Milk className="h-5 w-5 text-primary" />
-                    <span>{t.milkYield}</span>
+                    <span>{t('milkYieldPrediction')}</span>
                   </CardTitle>
                   <CardDescription>
-                    {t.predictedYield}: <span className="font-semibold text-primary">28.5 {t.litersPerDay}</span>
+                    {t('predictedYield')}: <span className="font-semibold text-primary">{avgYield} {t('litersPerDay')}</span>
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-4">
-                    <div className="text-sm font-medium text-muted-foreground">{t.weeklyTrend}</div>
+                    <div className="text-sm font-medium text-muted-foreground">{t('weeklyTrend')}</div>
                     {milkYieldData.length > 0 ? (
                       <ResponsiveContainer width="100%" height={400}>
                         <LineChart data={milkYieldData}>
@@ -838,7 +926,7 @@ export default function DairyDashboard() {
                             dataKey="yield"
                             stroke="#2563eb"
                             strokeWidth={2}
-                            name={t.actualYield}
+                            name={t('actualYield')}
                           />
                           <Line
                             type="monotone"
@@ -846,7 +934,7 @@ export default function DairyDashboard() {
                             stroke="#10b981"
                             strokeWidth={2}
                             strokeDasharray="5 5"
-                            name={t.predictedYield}
+                            name={t('predictedYield')}
                           />
                         </LineChart>
                       </ResponsiveContainer>
@@ -883,10 +971,6 @@ export default function DairyDashboard() {
                   >
                     <FileText className="h-4 w-4" />
                     <span>{t('generateReport')}</span>
-                  </Button>
-                  <Button variant="outline" className="flex items-center space-x-2 bg-transparent">
-                    <Download className="h-4 w-4" />
-                    <span>{t('exportData')}</span>
                   </Button>
                 </div>
               </CardContent>
@@ -993,149 +1077,289 @@ export default function DairyDashboard() {
               </CardHeader>
               <CardContent className="space-y-6">
                 <div className="grid gap-6 md:grid-cols-2">
-                  {/* Mandatory Fields */}
-                  <div className="space-y-4 p-4 border-2 border-black rounded-lg">
-                    <h3 className="font-semibold text-foreground">{t('basicCowInfo')}</h3>
-
-                    <div className="space-y-2">
-                      <Label htmlFor="breed">{t('breed')} *</Label>
-                      <Select value={formData.breed} onValueChange={(value) => handleInputChange("breed", value)}>
-                        <SelectTrigger className="border-2 border-gray-400">
-                          <SelectValue placeholder={t('selectBreed')} />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="Holstein">{t('holstein')}</SelectItem>
-                          <SelectItem value="Jersey">{t('jersey')}</SelectItem>
-                          <SelectItem value="Guernsey">{t('guernsey')}</SelectItem>
-                          <SelectItem value="Ayrshire">{t('ayrshire')}</SelectItem>
-                          <SelectItem value="Brown Swiss">{t('brownSwiss')}</SelectItem>
-                          <SelectItem value="Simmental">{t('simmental')}</SelectItem>
-                        </SelectContent>
-                      </Select>
+                  {/* Enhanced Basic Cow Information */}
+                  <div className="p-6 bg-gradient-to-r from-blue-50 to-blue-100 border-2 border-blue-200 rounded-xl shadow-sm hover:shadow-md transition-shadow">
+                    <div className="flex items-center justify-between mb-4">
+                      <h3 className="font-bold text-lg text-blue-800 flex items-center">
+                        <div className="p-2 bg-blue-200 rounded-full mr-3">
+                          <Cow className="h-6 w-6 text-blue-700" />
+                        </div>
+                        {t('basicCowInfo')}
+                      </h3>
+                      <div className="px-3 py-1 bg-blue-200 text-blue-800 text-xs font-medium rounded-full">
+                        {t('essential')}
+                      </div>
                     </div>
+                    <p className="text-sm text-blue-700 mb-6 leading-relaxed">
+                      {t('basicInfoDescription')}
+                    </p>
 
-                    <div className="space-y-2">
-                      <Label htmlFor="age_months">{t('ageMonths')} *</Label>
-                      <Input
-                        id="age_months"
-                        type="number"
-                        placeholder={t('enterAge')}
-                        value={formData.age_months}
-                        onChange={(e) => handleInputChange("age_months", parseFloat(e.target.value))}
-                        className="border-2 border-gray-400"
-                      />
-                    </div>
+                    <div className="grid gap-4 md:grid-cols-1">
+                      <div className="space-y-3">
+                        <Label htmlFor="breed" className="text-sm font-semibold text-blue-800">{t('breed')} *</Label>
+                        <Select value={formData.breed} onValueChange={(value) => handleInputChange("breed", value)}>
+                          <SelectTrigger className="border-2 border-blue-300 hover:border-blue-400 transition-colors h-12">
+                            <SelectValue placeholder={t('selectBreed')} />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="Holstein" className="py-3">
+                              <div className="flex items-center space-x-2">
+                                <span className="text-lg">🐄</span>
+                                <div>
+                                  <div className="font-medium">{t('holstein')}</div>
+                                  <div className="text-xs text-gray-500">High milk production</div>
+                                </div>
+                              </div>
+                            </SelectItem>
+                            <SelectItem value="Jersey" className="py-3">
+                              <div className="flex items-center space-x-2">
+                                <span className="text-lg">🐮</span>
+                                <div>
+                                  <div className="font-medium">{t('jersey')}</div>
+                                  <div className="text-xs text-gray-500">Rich milk quality</div>
+                                </div>
+                              </div>
+                            </SelectItem>
+                            <SelectItem value="Guernsey" className="py-3">
+                              <div className="flex items-center space-x-2">
+                                <span className="text-lg">🐄</span>
+                                <div>
+                                  <div className="font-medium">{t('guernsey')}</div>
+                                  <div className="text-xs text-gray-500">Golden milk</div>
+                                </div>
+                              </div>
+                            </SelectItem>
+                            <SelectItem value="Ayrshire" className="py-3">
+                              <div className="flex items-center space-x-2">
+                                <span className="text-lg">🐮</span>
+                                <div>
+                                  <div className="font-medium">{t('ayrshire')}</div>
+                                  <div className="text-xs text-gray-500">Hardy breed</div>
+                                </div>
+                              </div>
+                            </SelectItem>
+                            <SelectItem value="Brown Swiss" className="py-3">
+                              <div className="flex items-center space-x-2">
+                                <span className="text-lg">🐄</span>
+                                <div>
+                                  <div className="font-medium">{t('brownSwiss')}</div>
+                                  <div className="text-xs text-gray-500">Dual purpose</div>
+                                </div>
+                              </div>
+                            </SelectItem>
+                            <SelectItem value="Simmental" className="py-3">
+                              <div className="flex items-center space-x-2">
+                                <span className="text-lg">🐮</span>
+                                <div>
+                                  <div className="font-medium">{t('simmental')}</div>
+                                  <div className="text-xs text-gray-500">Large frame</div>
+                                </div>
+                              </div>
+                            </SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
 
-                    <div className="space-y-2">
-                      <Label htmlFor="weight_kg">{t('weightKg')} *</Label>
-                      <Input
-                        id="weight_kg"
-                        type="number"
-                        placeholder={t('enterWeight')}
-                        value={formData.weight_kg}
-                        onChange={(e) => handleInputChange("weight_kg", parseFloat(e.target.value))}
-                        className="border-2 border-gray-400"
-                      />
-                    </div>
+                      <div className="space-y-3">
+                        <Label htmlFor="age_months" className="text-sm font-semibold text-blue-800">{t('ageMonths')} *</Label>
+                        <Input
+                          id="age_months"
+                          type="number"
+                          placeholder={t('enterAge')}
+                          value={formData.age_months}
+                          onChange={(e) => handleInputChange("age_months", parseFloat(e.target.value))}
+                          className="border-2 border-blue-300 hover:border-blue-400 transition-colors h-12"
+                        />
+                        <div className="text-xs text-blue-600 bg-blue-100 p-2 rounded">
+                          {t('ageRange')}: 24-120 months
+                        </div>
+                      </div>
 
+                      <div className="space-y-3">
+                        <Label htmlFor="weight_kg" className="text-sm font-semibold text-blue-800">{t('weightKg')} *</Label>
+                        <Input
+                          id="weight_kg"
+                          type="number"
+                          placeholder={t('enterWeight')}
+                          value={formData.weight_kg}
+                          onChange={(e) => handleInputChange("weight_kg", parseFloat(e.target.value))}
+                          className="border-2 border-blue-300 hover:border-blue-400 transition-colors h-12"
+                        />
+                        <div className="text-xs text-blue-600 bg-blue-100 p-2 rounded">
+                          {t('weightRange')}: 300-1200 kg
+                        </div>
+                      </div>
 
-                    <div className="space-y-2">
-                      <Label htmlFor="feed_quantity_kg">{t('feedQuantity')} *</Label>
-                      <Input
-                        id="feed_quantity_kg"
-                        type="number"
-                        placeholder={t('enterFeedQuantity')}
-                        value={formData.feed_quantity_kg}
-                        onChange={(e) => handleInputChange("feed_quantity_kg", parseFloat(e.target.value))}
-                        className="border-2 border-gray-400"
-                      />
-                    </div>
+                      <div className="space-y-3">
+                        <Label htmlFor="feed_quantity_kg" className="text-sm font-semibold text-blue-800">{t('feedQuantity')} *</Label>
+                        <Input
+                          id="feed_quantity_kg"
+                          type="number"
+                          placeholder={t('enterFeedQuantity')}
+                          value={formData.feed_quantity_kg}
+                          onChange={(e) => handleInputChange("feed_quantity_kg", parseFloat(e.target.value))}
+                          className="border-2 border-blue-300 hover:border-blue-400 transition-colors h-12"
+                        />
+                        <div className="text-xs text-blue-600 bg-blue-100 p-2 rounded">
+                          {t('feedRange')}: 5-50 kg per day
+                        </div>
+                      </div>
 
-                    <div className="space-y-2">
-                      <Label htmlFor="temperature">{t('temperature')} *</Label>
-                      <Input
-                        id="temperature"
-                        type="number"
-                        placeholder={t('enterTemperature')}
-                        value={formData.temperature}
-                        onChange={(e) => handleInputChange("temperature", parseFloat(e.target.value))}
-                        className="border-2 border-gray-400"
-                      />
-                    </div>
+                      <div className="space-y-3">
+                        <Label htmlFor="temperature" className="text-sm font-semibold text-blue-800">{t('temperature')} *</Label>
+                        <Input
+                          id="temperature"
+                          type="number"
+                          placeholder={t('enterTemperature')}
+                          value={formData.temperature}
+                          onChange={(e) => handleInputChange("temperature", parseFloat(e.target.value))}
+                          className="border-2 border-blue-300 hover:border-blue-400 transition-colors h-12"
+                        />
+                        <div className="text-xs text-blue-600 bg-blue-100 p-2 rounded">
+                          {t('tempRange')}: -10°C to 45°C
+                        </div>
+                      </div>
 
-                    <div className="space-y-2">
-                      <Label htmlFor="humidity">{t('humidity')} *</Label>
-                      <Input
-                        id="humidity"
-                        type="number"
-                        placeholder={t('enterHumidity')}
-                        value={formData.humidity}
-                        onChange={(e) => handleInputChange("humidity", parseFloat(e.target.value))}
-                        className="border-2 border-gray-400"
-                      />
+                      <div className="space-y-3">
+                        <Label htmlFor="humidity" className="text-sm font-semibold text-blue-800">{t('humidity')} *</Label>
+                        <Input
+                          id="humidity"
+                          type="number"
+                          placeholder={t('enterHumidity')}
+                          value={formData.humidity}
+                          onChange={(e) => handleInputChange("humidity", parseFloat(e.target.value))}
+                          className="border-2 border-blue-300 hover:border-blue-400 transition-colors h-12"
+                        />
+                        <div className="text-xs text-blue-600 bg-blue-100 p-2 rounded">
+                          {t('humidityRange')}: 0-100%
+                        </div>
+                      </div>
                     </div>
                   </div>
 
-                  {/* Optional Fields */}
-                  <div className="space-y-4 p-4 border-2 border-black rounded-lg">
-                    <h3 className="font-semibold text-foreground">{t('farmEnvironmentDetails')}</h3>
-
-                    <div className="space-y-2">
-                      <Label htmlFor="feed_type">{t('feedType')}</Label>
-                      <Select value={formData.feed_type} onValueChange={(value) => handleInputChange("feed_type", value)}>
-                        <SelectTrigger className="border-2 border-gray-400">
-                          <SelectValue placeholder={t('selectFeedType')} />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="green_fodder">{t('greenFodder')}</SelectItem>
-                          <SelectItem value="dry_fodder">{t('dryFodder')}</SelectItem>
-                          <SelectItem value="concentrates">{t('concentrates')}</SelectItem>
-                          <SelectItem value="silage">{t('silage')}</SelectItem>
-                          <SelectItem value="mixed">{t('mixed')}</SelectItem>
-                        </SelectContent>
-                      </Select>
+                  {/* Enhanced Farm & Environment Details */}
+                  <div className="p-6 bg-gradient-to-r from-purple-50 to-purple-100 border-2 border-purple-200 rounded-xl shadow-sm hover:shadow-md transition-shadow">
+                    <div className="flex items-center justify-between mb-4">
+                      <h3 className="font-bold text-lg text-purple-800 flex items-center">
+                        <div className="p-2 bg-purple-200 rounded-full mr-3">
+                          <Globe className="h-6 w-6 text-purple-700" />
+                        </div>
+                        {t('farmEnvironmentDetails')}
+                      </h3>
+                      <div className="px-3 py-1 bg-purple-200 text-purple-800 text-xs font-medium rounded-full">
+                        {t('environmental')}
+                      </div>
                     </div>
+                    <p className="text-sm text-purple-700 mb-6 leading-relaxed">
+                      {t('environmentDescription')}
+                    </p>
 
-                    <div className="space-y-2">
-                      <Label htmlFor="grazing_hours">{t('grazingHours')}: {formData.grazing_hours} {t('hours')}</Label>
-                      <Input
-                        id="grazing_hours"
-                        type="number"
-                        step="0.1"
-                        min="0"
-                        max="12"
-                        placeholder={t('dailyGrazingHours')}
-                        value={formData.grazing_hours}
-                        onChange={(e) => handleInputChange("grazing_hours", parseFloat(e.target.value))}
-                        className="border-2 border-gray-400"
-                      />
+                    <div className="grid gap-4 md:grid-cols-1">
+                      <div className="space-y-3">
+                        <Label htmlFor="feed_type" className="text-sm font-semibold text-purple-800">{t('feedType')}</Label>
+                        <Select value={formData.feed_type} onValueChange={(value) => handleInputChange("feed_type", value)}>
+                          <SelectTrigger className="border-2 border-purple-300 hover:border-purple-400 transition-colors h-12">
+                            <SelectValue placeholder={t('selectFeedType')} />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="green_fodder" className="py-3">
+                              <div className="flex items-center space-x-2">
+                                <span className="text-lg">🌱</span>
+                                <div>
+                                  <div className="font-medium">{t('greenFodder')}</div>
+                                  <div className="text-xs text-gray-500">Fresh grass and leaves</div>
+                                </div>
+                              </div>
+                            </SelectItem>
+                            <SelectItem value="dry_fodder" className="py-3">
+                              <div className="flex items-center space-x-2">
+                                <span className="text-lg">🌾</span>
+                                <div>
+                                  <div className="font-medium">{t('dryFodder')}</div>
+                                  <div className="text-xs text-gray-500">Hay and straw</div>
+                                </div>
+                              </div>
+                            </SelectItem>
+                            <SelectItem value="concentrates" className="py-3">
+                              <div className="flex items-center space-x-2">
+                                <span className="text-lg">🌽</span>
+                                <div>
+                                  <div className="font-medium">{t('concentrates')}</div>
+                                  <div className="text-xs text-gray-500">Grains and pellets</div>
+                                </div>
+                              </div>
+                            </SelectItem>
+                            <SelectItem value="silage" className="py-3">
+                              <div className="flex items-center space-x-2">
+                                <span className="text-lg">🥬</span>
+                                <div>
+                                  <div className="font-medium">{t('silage')}</div>
+                                  <div className="text-xs text-gray-500">Fermented feed</div>
+                                </div>
+                              </div>
+                            </SelectItem>
+                            <SelectItem value="mixed" className="py-3">
+                              <div className="flex items-center space-x-2">
+                                <span className="text-lg">🥗</span>
+                                <div>
+                                  <div className="font-medium">{t('mixed')}</div>
+                                  <div className="text-xs text-gray-500">Combination feed</div>
+                                </div>
+                              </div>
+                            </SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+
+                      <div className="space-y-3">
+                        <Label htmlFor="grazing_hours" className="text-sm font-semibold text-purple-800">{t('grazingHours')}: {formData.grazing_hours} {t('hours')}</Label>
+                        <Input
+                          id="grazing_hours"
+                          type="number"
+                          step="0.1"
+                          min="0"
+                          max="12"
+                          placeholder={t('dailyGrazingHours')}
+                          value={formData.grazing_hours}
+                          onChange={(e) => handleInputChange("grazing_hours", parseFloat(e.target.value))}
+                          className="border-2 border-purple-300 hover:border-purple-400 transition-colors h-12"
+                        />
+                        <div className="text-xs text-purple-600 bg-purple-100 p-2 rounded">
+                          {t('grazingRange')}: 0-12 hours per day
+                        </div>
+                      </div>
+
+                      <div className="space-y-3">
+                        <Label htmlFor="body_temperature" className="text-sm font-semibold text-purple-800">{t('bodyTemperature')}</Label>
+                        <Input
+                          id="body_temperature"
+                          type="number"
+                          step="0.1"
+                          placeholder={t('bodyTemp')}
+                          value={formData.body_temperature}
+                          onChange={(e) => handleInputChange("body_temperature", parseFloat(e.target.value))}
+                          className="border-2 border-purple-300 hover:border-purple-400 transition-colors h-12"
+                        />
+                        <div className="text-xs text-purple-600 bg-purple-100 p-2 rounded">
+                          {t('bodyTempRange')}: 36-45°C (Normal: 38-39°C)
+                        </div>
+                      </div>
+
+                      <div className="space-y-3">
+                        <Label htmlFor="heart_rate" className="text-sm font-semibold text-purple-800">{t('heartRate')}</Label>
+                        <Input
+                          id="heart_rate"
+                          type="number"
+                          placeholder={t('enterHeartRate')}
+                          value={formData.heart_rate}
+                          onChange={(e) => handleInputChange("heart_rate", parseFloat(e.target.value))}
+                          className="border-2 border-purple-300 hover:border-purple-400 transition-colors h-12"
+                        />
+                        <div className="text-xs text-purple-600 bg-purple-100 p-2 rounded">
+                          {t('heartRateRange')}: 48-84 bpm (Normal: 60-70 bpm)
+                        </div>
+                      </div>
                     </div>
-
-                    <div className="space-y-2">
-                      <Label htmlFor="body_temperature">{t('bodyTemperature')}</Label>
-                      <Input
-                        id="body_temperature"
-                        type="number"
-                        step="0.1"
-                        placeholder={t('bodyTemp')}
-                        value={formData.body_temperature}
-                        onChange={(e) => handleInputChange("body_temperature", parseFloat(e.target.value))}
-                        className="border-2 border-gray-400"
-                      />
-                    </div>
-
-                    <div className="space-y-2">
-                      <Label htmlFor="heart_rate">{t('heartRate')}</Label>
-                      <Input
-                        id="heart_rate"
-                        type="number"
-                        placeholder={t('enterHeartRate')}
-                        value={formData.heart_rate}
-                        onChange={(e) => handleInputChange("heart_rate", parseFloat(e.target.value))}
-                        className="border-2 border-gray-400"
-                      />
-                    </div>
-
                   </div>
                 </div>
 
