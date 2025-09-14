@@ -195,10 +195,10 @@ Content-Type: application/json
 ![Data Input](Frontend/public/DataInput.png)
 
 ### Cattle Management
-![Cattle Management](Frontend/public/Cattle Overview.png)
+![Cattle Management](Frontend/public/CattleOverview.png)
 
 ### AI Predictions
-![AI Predictions](Frontend/public/AI Prediction.png)
+![AI Predictions](Frontend/public/AIPrediction.png)
 
 ### Report Generation
 ![Reports](Frontend/public/FarmDashboardReport.png)
