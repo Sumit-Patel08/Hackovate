@@ -839,6 +839,12 @@ export default function DairyDashboard() {
 
           {/* Dashboard Tab */}
           <TabsContent value="dashboard" className="space-y-6">
+            <div className="flex items-center justify-between mb-6">
+              <div>
+                <h1 className="text-3xl font-bold tracking-tight">{t('dashboard')}</h1>
+                <p className="text-muted-foreground">Monitor your cattle health and milk production with AI-powered insights</p>
+              </div>
+            </div>
             {/* Debug Panel */}
             {user && (
               <div className="mb-4 p-4 bg-gray-50 border border-gray-200 rounded-lg">
@@ -1015,27 +1021,6 @@ export default function DairyDashboard() {
           </TabsContent>
 
           <TabsContent value="overview" className="space-y-6">
-            <div className="flex items-center justify-between mb-6">
-              <div>
-                <h1 className="text-3xl font-bold tracking-tight">{t('dashboard')}</h1>
-                <p className="text-muted-foreground">Monitor your cattle health and milk production with AI-powered insights</p>
-              </div>
-              <div className="flex items-center space-x-4">
-                <Select value={language} onValueChange={setLanguage}>
-                  <SelectTrigger className="w-32">
-                    <Globe className="h-4 w-4 mr-2" />
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="en">English</SelectItem>
-                    <SelectItem value="hi">हिंदी</SelectItem>
-                    <SelectItem value="gu">ગુજરાતી</SelectItem>
-                    <SelectItem value="mr">मराठी</SelectItem>
-                  </SelectContent>
-                </Select>
-                <UserProfile />
-              </div>
-            </div>
             <div className="flex items-center justify-between">
               <div>
                 <h2 className="text-2xl font-bold tracking-tight">{t('cattleOverview')}</h2>
