@@ -1,0 +1,72 @@
+AI/ML-Based Cattle Milk Yield Prediction - Training Report
+============================================================
+Generated: 2025-09-13 13:21:11
+
+MODEL PERFORMANCE SUMMARY
+------------------------------
+
+Linear Regression:
+  Test R²: 0.8479
+  Test RMSE: 2.5416 L
+  Test MAE: 2.0174 L
+  CV R² (mean±std): 0.8452±0.0028
+
+Ridge Regression:
+  Test R²: 0.8479
+  Test RMSE: 2.5420 L
+  Test MAE: 2.0176 L
+  CV R² (mean±std): 0.8451±0.0028
+
+Random Forest:
+  Test R²: 0.8822
+  Test RMSE: 2.2368 L
+  Test MAE: 1.7743 L
+  CV R² (mean±std): 0.8784±0.0029
+
+Gradient Boosting:
+  Test R²: 0.8907
+  Test RMSE: 2.1544 L
+  Test MAE: 1.7080 L
+  CV R² (mean±std): 0.8888±0.0021
+
+XGBoost:
+  Test R²: 0.8909
+  Test RMSE: 2.1527 L
+  Test MAE: 1.7068 L
+  CV R² (mean±std): 0.8879±0.0013
+
+LightGBM:
+  Test R²: 0.9001
+  Test RMSE: 2.0602 L
+  Test MAE: 1.6357 L
+  CV R² (mean±std): 0.8986±0.0018
+
+BEST MODEL: LightGBM
+Test R²: 0.9001
+
+FEATURES USED (25):
+ 1. age_months
+ 2. weight_kg
+ 3. lactation_day
+ 4. parity
+ 5. historical_yield_7d
+ 6. historical_yield_30d
+ 7. feed_quantity_kg
+ 8. feeding_frequency
+ 9. walking_distance_km
+10. grazing_hours
+11. rumination_hours
+12. resting_hours
+13. body_temperature
+14. heart_rate
+15. health_score
+16. temperature
+17. humidity
+18. ventilation_score
+19. cleanliness_score
+20. day_of_year
+21. breed
+22. lactation_stage
+23. feed_type
+24. season
+25. housing_type

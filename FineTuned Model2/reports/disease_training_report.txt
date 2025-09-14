@@ -1,0 +1,46 @@
+
+Cattle Disease Detection Model Training Report
+Generated: 2025-09-13 21:43:37
+
+Model Performance:
+- Best Model: Random Forest
+- Best F1 Score: 1.0000
+
+All Model Results:
+
+Random Forest:
+  - Accuracy: 1.0000
+  - F1 Score: 1.0000
+  - CV Mean: 1.0000
+  - CV Std: 0.0000
+
+Gradient Boosting:
+  - Accuracy: 1.0000
+  - F1 Score: 1.0000
+  - CV Mean: 0.9999
+  - CV Std: 0.0001
+
+Logistic Regression:
+  - Accuracy: 1.0000
+  - F1 Score: 1.0000
+  - CV Mean: 1.0000
+  - CV Std: 0.0000
+
+SVM:
+  - Accuracy: 1.0000
+  - F1 Score: 1.0000
+  - CV Mean: 0.9999
+  - CV Std: 0.0002
+
+Classes: digestive_disorder, healthy, lameness, mastitis, mineral_deficiency
+
+Feature Categories:
+- Numerical Features: 26
+- Categorical Features: 4
+- Binary Features: 1
+
+Notes:
+- Model trained for cattle disease detection and classification
+- Focuses on mastitis, digestive disorders, mineral deficiency, lameness detection
+- Uses ensemble methods for robust predictions
+- Includes comprehensive health parameters and environmental factors

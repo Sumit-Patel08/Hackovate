@@ -1,0 +1,1248 @@
+export const translations = {
+  en: {
+    // Main Title
+    title: "Dairy Cattle Monitoring Dashboard",
+    subtitle: "Monitor your cattle health and milk production with AI-powered insights",
+    
+    // Dashboard
+    dashboard: "Dashboard",
+    cattleOverview: "Cattle Overview",
+    overviewDescription: "Monitor individual cattle performance and health",
+    reloadData: "Reload Data",
+    allCattleDataLoaded: "All Cattle Data Loaded!",
+    cattleDataCount: "cattle records found and loaded successfully",
+    loadedRecords: "Loaded",
+    enterAge: "Enter age in months",
+    enterWeight: "Enter weight in kg",
+    enterFeedQuantity: "Daily feed quantity",
+    enterTemperature: "Ambient temperature",
+    humidity: "Humidity (%)",
+    enterHumidity: "Enter humidity percentage",
+    aiPredictions: "AI Prediction Services",
+    inputData: "Input Data",
+    overview: "Overview",
+    
+    // Stats Cards
+    totalCattle: "Total Cattle",
+    avgYield: "Avg Daily Yield",
+    healthyAnimals: "Healthy Animals",
+    
+    // Milk Yield
+    milkYield: "Milk Yield Prediction",
+    predictedYield: "Predicted Yield",
+    litersPerDay: "L/day",
+    weeklyTrend: "Weekly Trend",
+    actualYield: "Actual Yield",
+    
+    // Form Section Titles
+    basicCowInfo: "🐄 Basic Cow Information",
+    farmEnvironmentDetails: "🌾 Farm & Environment Details", 
+    walkingMovementAssessment: "🚶 Walking & Movement Assessment",
+    eatingDigestionAssessment: "🍽️ Eating & Digestion Assessment",
+    udderMilkQualityCheck: "🥛 Udder & Milk Quality Check",
+    overallHealthAppearance: "🏥 Overall Health & Appearance",
+    
+    // Forms
+    breed: "Breed",
+    ageMonths: "Age (Months)",
+    weightKg: "Weight (kg)",
+    feedType: "Feed Type",
+    feedQuantity: "Feed Quantity (kg)",
+    grazingHours: "Grazing Hours",
+    bodyTemperature: "Body Temperature (°C)",
+    heartRate: "Heart Rate (BPM)",
+    
+    // Feed Type Options
+    greenFodder: "Green Fodder",
+    dryFodder: "Dry Fodder", 
+    concentrates: "Concentrates",
+    silage: "Silage",
+    mixed: "Mixed",
+    
+    // Breed Options
+    holstein: "Holstein Friesian",
+    jersey: "Jersey",
+    guernsey: "Guernsey",
+    ayrshire: "Ayrshire",
+    brownSwiss: "Brown Swiss",
+    simmental: "Simmental",
+    
+    // Placeholders
+    selectFeedType: "Select feed type",
+    dailyGrazingHours: "Daily grazing hours",
+    bodyTemp: "Body temperature",
+    enterHeartRate: "Enter heart rate",
+    hours: "hours",
+    
+    // Health Assessment
+    mobilityCheck: "Mobility Check",
+    walkingConditionAssessment: "Walking Condition Assessment",
+    selectWalkingCondition: "Select walking condition...",
+    normalWalking: "Normal Walking",
+    walksNormally: "Walks normally, no problems",
+    slightDifference: "Slight Difference", 
+    walksDifferently: "Walks a bit differently than usual",
+    observeMovement: "Observe your cow's movement patterns and walking behavior to detect potential lameness or mobility issues",
+    visibleLimping: "Visible Limping",
+    clearlyLimping: "Clearly limping or favoring one leg",
+    severeLameness: "Severe Lameness",
+    difficultyWalking: "Has difficulty walking or standing",
+    reluctantMovement: "Reluctant Movement",
+    doesntWantWalk: "Doesn't want to walk much",
+    dailyWalkingDistance: "Daily Walking Distance (km)",
+    walkingPlaceholder: "e.g., 2.5 km from barn to field",
+    typicalRange: "💡 Typical range: 1-5 km depending on pasture size",
+    nutritionCheck: "Nutrition Check",
+    monitorAppetite: "Monitor your cow's appetite and digestion patterns to ensure proper nutrition and detect digestive issues",
+    appetiteEatingBehavior: "Appetite & Eating Behavior",
+    selectEatingCondition: "Select eating condition...",
+    poorAppetite: "Poor Appetite",
+    notEatingMuch: "Not eating much, seems uninterested",
+    normalAppetite: "Normal Appetite",
+    eatingRegularly: "Eating regularly and normally",
+    goodAppetite: "Good Appetite", 
+    eatingWell: "Eating well and eagerly",
+    reducedAppetite: "Reduced Appetite",
+    eatingLess: "Eating less than usual",
+    averageAppetite: "Average Appetite",
+    eatingOkay: "Eating okay, but not great",
+    excellentAppetite: "Excellent Appetite",
+    eatingVeryWell: "Eating very well, always hungry",
+    dailyRuminationHours: "Daily Rumination Hours",
+    ruminationPlaceholder: "e.g., 7 hours (normal is 6-8 hours)",
+    normalRuminationRange: "💡 Normal range: 6-8 hours of cud chewing daily",
+    
+    // Health Indicators and Warnings
+    healthIndicators: "🔍 Health Indicators:",
+    healthyCowsSpend: "• Healthy cows spend 6-8 hours daily chewing cud",
+    lessThanFiveHours: "• Less than 5 hours may indicate digestive problems", 
+    watchForSigns: "• Watch for signs of discomfort after eating",
+    
+    // Overall Health & Appearance
+    overallHealthAppearance: "✨ Overall Health & Appearance",
+    checkGeneralHealth: "Check your cow's general health and appearance",
+    goodShineHealthy: "😊 Good shine, healthy looking",
+    signsOfGoodHealth: "💡 Signs of good health: Shiny coat, normal temperature (38-39°C), bright eyes, wet nose, active behavior",
+    
+    // Udder & Milk Quality
+    udderMilkQualityCheck: "🥛 Udder & Milk Quality Check", 
+    checkUdderHealth: "Check your cow's udder health and milk quality",
+    slightlySwollen: "🤔 Slightly swollen or firm",
+    warningSignsUdder: "💡 Warning signs: Hot, swollen, or hard udder may indicate mastitis. Check milk for clots, blood, or unusual color.",
+    
+    // AI Prediction Services
+    aiPredictionServices: "AI Prediction Services",
+    predictMilkYield: "Predict Milk Yield",
+    detectDisease: "Detect Disease", 
+    completeAnalysis: "Complete Analysis",
+    
+    // Coat Condition Options
+    coatConditionLabel: "How does your cow's coat/hair look?",
+    chooseCoatCondition: "Choose coat condition",
+    veryDullRough: "😢 Very dull, rough, patchy hair",
+    somewhatDull: "😟 Somewhat dull, not shiny", 
+    averageLooking: "🤔 Average looking, okay shine",
+    goodShineHealthy: "😊 Good shine, healthy looking",
+    veryShinyGlossy: "✨ Very shiny, glossy, beautiful coat",
+    
+    // Temperature
+    bodyTemperatureLabel: "Body Temperature (°C)",
+    normalTempPlaceholder: "Normal is 38-39°C (use thermometer)",
+    
+    // Udder Condition Options
+    udderSwellingLabel: "Is the udder swollen or hard?",
+    chooseUdderCondition: "Choose udder condition",
+    normalSoftUdder: "😊 Normal, soft, no swelling",
+    slightlySwollenUdder: "🤔 Slightly swollen or firm",
+    clearlySwollenUdder: "😟 Clearly swollen, feels hard",
+    verySwollenUdder: "😰 Very swollen, hot, painful",
+    
+    // Heart Rate
+    heartRateLabel: "Heart Rate (beats per minute)",
+    normalHeartRatePlaceholder: "Normal is 60-80 beats/minute",
+    
+    // Loading and Button States
+    predicting: "Predicting...",
+    analyzing: "Analyzing...",
+    processing: "Processing...",
+    detectDisease: "Detect Disease",
+    completeAnalysis: "Complete Analysis",
+    saveCattleData: "Save Cattle Data",
+    
+    // Prediction Results UI Translations
+    milkYieldPredictionResults: "Milk Yield Prediction Results",
+    diseaseDetectionResults: "Disease Detection Results",
+    predictedMilkYield: "Predicted Milk Yield",
+    day: "day",
+    timestamp: "Timestamp",
+    warnings: "Warnings",
+    risk: "risk",
+    
+    // Recommendation Translations
+    continueCurrentPractices: "Continue current management practices",
+    monitorRegularly: "Monitor regularly for any changes in health parameters",
+    maintainNutrition: "Maintain good nutrition and hygiene",
+    saveCattleDataToDatabase: "Save Cattle Data to Database",
+    predictionsReady: "Your predictions are ready! Save this cattle's information to your database for future reference and reporting.",
+    grazingHours: "Grazing Hours",
+    bodyTemp: "Body Temperature (°C)",
+    heartRate: "Heart Rate (bpm)",
+    
+    // Report Translations
+    cattleHealthMilkReport: "Cattle Health & Milk Production Report",
+    comprehensiveCattleReport: "Comprehensive Cattle Analysis Report",
+    dairyCattleMonitoring: "Dairy Cattle Monitoring System",
+    aiPoweredPlatform: "AI-Powered Cattle Management Platform",
+    generatedOn: "Generated on",
+    cattleInformation: "CATTLE INFORMATION",
+    aiPredictionsAnalysis: "AI PREDICTIONS & ANALYSIS",
+    recommendations: "RECOMMENDATIONS",
+    milkYieldPrediction: "Milk Yield Prediction",
+    predictedDailyYield: "Predicted Daily Yield",
+    confidenceLevel: "Confidence Level",
+    status: "Status",
+    healthStatusAnalysis: "Health Status Analysis",
+    healthStatus: "Health Status",
+    riskLevel: "Risk Level",
+    confidence: "Confidence",
+    breed: "Breed",
+    age: "Age",
+    weight: "Weight",
+    feedType: "Feed Type",
+    feedQuantity: "Feed Quantity",
+    grazingHours: "Grazing Hours",
+    bodyTemperature: "Body Temperature",
+    heartRate: "Heart Rate",
+    environmentalTemperature: "Environmental Temperature",
+    humidity: "Humidity",
+    months: "months",
+    kgPerDay: "kg/day",
+    hoursPerDay: "hours/day",
+    bpm: "BPM",
+    notSpecified: "Not specified",
+    farmDashboardReport: "FARM DASHBOARD REPORT",
+    completeFarmAnalysis: "Complete Farm Analysis",
+    cattle: "Cattle",
+    farmSummary: "FARM SUMMARY",
+    totalCattle: "Total Cattle",
+    dailyMilkProduction: "Daily Milk Production",
+    averageYieldPerCattle: "Average Yield per Cattle",
+    projectedMonthlyProduction: "Projected Monthly Production",
+    healthyCattle: "Healthy Cattle",
+    mostCommonBreed: "Most Common Breed",
+    productionAnalysis: "PRODUCTION ANALYSIS",
+    lowProducers: "Low Producers (<15L/day)",
+    mediumProducers: "Medium Producers (15-25L/day)",
+    highProducers: "High Producers (>25L/day)",
+    productionEfficiency: "Production Efficiency",
+    highProducersPercent: "% high producers",
+    healthOverview: "HEALTH OVERVIEW",
+    excellentHealth: "Excellent Health (90-100)",
+    goodHealth: "Good Health (80-89)",
+    fairHealth: "Fair Health (60-79)",
+    poorHealth: "Poor Health (<60)",
+    overallHealthRate: "Overall Health Rate",
+    individualCattleSummary: "INDIVIDUAL CATTLE SUMMARY",
+    cattleId: "ID",
+    dailyYield: "Daily Yield",
+    healthScore: "Health Score",
+    good: "Good",
+    fair: "Fair",
+    poor: "Poor",
+    farmRecommendations: "FARM RECOMMENDATIONS",
+    reportDisclaimer: "This report is generated by AI-powered analysis and should be used in conjunction with professional veterinary advice.",
+    copyrightNotice: "© 2024 Dairy Cattle Monitoring System",
+    
+    // Environment
+    temperature: "Temperature (°C)",
+    humidity: "Humidity (%)",
+    season: "Season",
+    housingType: "Housing Type",
+    
+    // Health Metrics
+    lamenessScore: "Lameness Score",
+    appetiteScore: "Appetite Score",
+    coatCondition: "Coat Condition",
+    udderSwelling: "Udder Swelling",
+    ruminationHours: "Rumination Hours",
+    walkingDistance: "Walking Distance (km)",
+    
+    // Buttons
+    predictMilkYield: "Predict Milk Yield",
+    predictDisease: "Predict Disease Risk",
+    saveCattleData: "Save Cattle Data",
+    generateReport: "Generate Report",
+    exportData: "Export Data",
+    addNewCattle: "Add New Cattle",
+    
+    // Reports
+    farmReports: "Farm Reports",
+    
+    // Dropdown Options
+    holstein: "Holstein",
+    jersey: "Jersey",
+    gir: "Gir",
+    sahiwal: "Sahiwal",
+    mixed: "Mixed",
+    hay: "Hay",
+    silage: "Silage",
+    concentrate: "Concentrate",
+    summer: "Summer",
+    winter: "Winter",
+    monsoon: "Monsoon",
+    freeStall: "Free Stall",
+    tieBarn: "Tie Barn",
+    pasture: "Pasture"
+  },
+  
+  hi: {
+    // Main Title
+    title: "डेरी पशु निरीक्षण डैशबोर्ड",
+    subtitle: "अपने पशुओं के स्वास्थ्य और दूध उत्पादन की निगरानी करें",
+    
+    // Dashboard
+    dashboard: "डैशबोर्ड",
+    cattleOverview: "पशु अवलोकन",
+    overview: "अवलोकन",
+    aiPredictions: "AI भविष्यवाणी सेवाएं",
+    inputData: "डेटा इनपुट",
+    
+    // Form Section Titles
+    basicCowInfo: "🐄 बुनियादी गाय की जानकारी",
+    farmEnvironmentDetails: "🌾 फार्म और पर्यावरण विवरण",
+    walkingMovementAssessment: "🚶 चलने और गति का आकलन",
+    eatingDigestionAssessment: "🍽️ खाने और पाचन का आकलन",
+    udderMilkQualityCheck: "🥛 थन और दूध गुणवत्ता जांच",
+    overallHealthAppearance: "🏥 समग्र स्वास्थ्य और दिखावट",
+    
+    // Health Assessment
+    mobilityCheck: "गतिशीलता जांच",
+    walkingConditionAssessment: "चलने की स्थिति का आकलन",
+    observeMovement: "लंगड़ाहट या गतिशीलता की समस्याओं का पता लगाने के लिए अपनी गाय के चलने के पैटर्न का निरीक्षण करें",
+    selectWalkingCondition: "चलने की स्थिति चुनें...",
+    normalWalking: "सामान्य चलना",
+    walksNormally: "सामान्य रूप से चलती है, कोई समस्या नहीं",
+    slightDifference: "थोड़ा अंतर",
+    walksDifferently: "सामान्य से थोड़ा अलग चलती है",
+    visibleLimping: "दिखाई देने वाली लंगड़ाहट",
+    clearlyLimping: "स्पष्ट रूप से लंगड़ा रही है या एक पैर को प्राथमिकता दे रही है",
+    severeLameness: "गंभीर लंगड़ाहट",
+    difficultyWalking: "चलने या खड़े होने में कठिनाई",
+    reluctantMovement: "अनिच्छुक गति",
+    doesntWantWalk: "अधिक चलने की इच्छा नहीं",
+    dailyWalkingDistance: "दैनिक चलने की दूरी (किमी)",
+    walkingPlaceholder: "उदा., गोशाला से खेत तक 2.5 किमी",
+    typicalRange: "💡 सामान्य सीमा: चरागाह के आकार के अनुसार 1-5 किमी",
+    
+    nutritionCheck: "पोषण जांच",
+    monitorAppetite: "उचित पोषण सुनिश्चित करने और पाचन संबंधी समस्याओं का पता लगाने के लिए अपनी गाय की भूख और पाचन पैटर्न की निगरानी करें",
+    appetiteEatingBehavior: "भूख और खाने का व्यवहार",
+    selectEatingCondition: "खाने की स्थिति चुनें...",
+    poorAppetite: "कम भूख",
+    notEatingMuch: "ज्यादा नहीं खाती, रुचि नहीं दिखाती",
+    normalAppetite: "सामान्य भूख",
+    eatingRegularly: "नियमित और सामान्य रूप से खाती है",
+    goodAppetite: "अच्छी भूख",
+    eatingWell: "अच्छी तरह और उत्सुकता से खाती है",
+    reducedAppetite: "कम भूख",
+    eatingLess: "सामान्य से कम खाती है",
+    averageAppetite: "औसत भूख",
+    eatingOkay: "ठीक खाती है, लेकिन बहुत अच्छी नहीं",
+    excellentAppetite: "उत्कृष्ट भूख",
+    eatingVeryWell: "बहुत अच्छी तरह खाती है, हमेशा भूखी",
+    dailyRuminationHours: "दैनिक जुगाली घंटे",
+    ruminationPlaceholder: "उदा., 7 घंटे (सामान्य 6-8 घंटे)",
+    normalRuminationRange: "💡 सामान्य सीमा: प्रतिदिन 6-8 घंटे जुगाली",
+    
+    // Health Indicators and Warnings
+    healthIndicators: "🔍 स्वास्थ्य संकेतक:",
+    healthyCowsSpend: "• स्वस्थ गायें प्रतिदिन 6-8 घंटे जुगाली करती हैं",
+    lessThanFiveHours: "• 5 घंटे से कम का मतलब पाचन संबंधी समस्या हो सकती है",
+    watchForSigns: "• खाने के बाद परेशानी के संकेतों को देखें",
+    
+    // Overall Health & Appearance
+    checkGeneralHealth: "अपनी गाय के सामान्य स्वास्थ्य और दिखावट की जांच करें",
+    coatConditionLabel: "आपकी गाय के बाल/कोट कैसे दिखते हैं?",
+    chooseCoatCondition: "बालों की स्थिति चुनें",
+    veryDullRough: "😢 बहुत फीके, खुरदरे, धब्बेदार बाल",
+    somewhatDull: "😟 कुछ फीके, चमक नहीं",
+    averageLooking: "🤔 औसत दिखने वाले, ठीक चमक",
+    goodShineHealthy: "😊 अच्छी चमक, स्वस्थ दिखने वाले",
+    veryShinyGlossy: "✨ बहुत चमकदार, चमकीले, सुंदर बाल",
+    bodyTemperatureLabel: "शरीर का तापमान (°C)",
+    normalTempPlaceholder: "सामान्य 38-39°C (थर्मामीटर का उपयोग करें)",
+    signsOfGoodHealth: "💡 अच्छे स्वास्थ्य के संकेत: चमकदार बाल, सामान्य तापमान (38-39°C), चमकदार आंखें, गीली नाक, सक्रिय व्यवहार",
+    
+    // Udder & Milk Quality
+    checkUdderHealth: "अपनी गाय के थन के स्वास्थ्य और दूध की गुणवत्ता की जांच करें",
+    udderSwellingLabel: "थन सूजा हुआ या कड़ा है?",
+    chooseUdderCondition: "थन की स्थिति चुनें",
+    normalSoftUdder: "😊 सामान्य, नरम, सूजन नहीं",
+    slightlySwollenUdder: "🤔 थोड़ा सूजा हुआ या कड़ा",
+    clearlySwollenUdder: "😟 स्पष्ट रूप से सूजा हुआ, कड़ा लगता है",
+    verySwollenUdder: "😰 बहुत सूजा हुआ, गर्म, दर्दनाक",
+    heartRateLabel: "हृदय गति (प्रति मिनट धड़कन)",
+    normalHeartRatePlaceholder: "सामान्य 60-80 धड़कन/मिनट",
+    warningSignsUdder: "💡 चेतावनी संकेत: गर्म, सूजा हुआ, या कड़ा थन मास्टाइटिस का संकेत हो सकता है। दूध में गांठ, खून, या असामान्य रंग की जांच करें।",
+    
+    // AI Prediction Services
+    aiPredictionServices: "AI भविष्यवाणी सेवाएं",
+    predictMilkYield: "दूध उत्पादन की भविष्यवाणी करें",
+    detectDisease: "रोग का पता लगाएं",
+    completeAnalysis: "पूर्ण विश्लेषण",
+    
+    // Loading and Button States
+    predicting: "भविष्यवाणी कर रहे हैं...",
+    analyzing: "विश्लेषण कर रहे हैं...",
+    processing: "प्रक्रिया कर रहे हैं...",
+    detectDisease: "रोग का पता लगाएं",
+    completeAnalysis: "पूर्ण विश्लेषण",
+    saveCattleData: "गाय का डेटा सेव करें",
+    
+    // Prediction Results UI Translations
+    milkYieldPredictionResults: "दूध उत्पादन भविष्यवाणी परिणाम",
+    diseaseDetectionResults: "रोग पहचान परिणाम",
+    predictedMilkYield: "अनुमानित दूध उत्पादन",
+    day: "दिन",
+    timestamp: "समय",
+    warnings: "चेतावनी",
+    risk: "जोखिम",
+    
+    // Recommendation Translations
+    continueCurrentPractices: "वर्तमान प्रबंधन प्रथाओं को जारी रखें",
+    monitorRegularly: "स्वास्थ्य मापदंडों में किसी भी बदलाव के लिए नियमित निगरानी करें",
+    maintainNutrition: "अच्छा पोषण और स्वच्छता बनाए रखें",
+    saveCattleDataToDatabase: "गाय का डेटा डेटाबेस में सेव करें",
+    predictionsReady: "आपकी भविष्यवाणियां तैयार हैं! भविष्य के संदर्भ और रिपोर्टिंग के लिए इस गाय की जानकारी को अपने डेटाबेस में सेव करें।",
+    
+    // Report Translations
+    cattleHealthMilkReport: "गाय स्वास्थ्य और दूध उत्पादन रिपोर्ट",
+    comprehensiveCattleReport: "व्यापक गाय विश्लेषण रिपोर्ट",
+    dairyCattleMonitoring: "डेयरी गाय निरीक्षण सिस्टम",
+    aiPoweredPlatform: "AI-संचालित गाय प्रबंधन प्लेटफॉर्म",
+    generatedOn: "पर बनाया गया",
+    cattleInformation: "गाय की जानकारी",
+    aiPredictionsAnalysis: "AI भविष्यवाणी और विश्लेषण",
+    recommendations: "सिफारिशें",
+    milkYieldPrediction: "दूध उत्पादन भविष्यवाणी",
+    predictedDailyYield: "अनुमानित दैनिक उत्पादन",
+    confidenceLevel: "विश्वास स्तर",
+    status: "स्थिति",
+    healthStatusAnalysis: "स्वास्थ्य स्थिति विश्लेषण",
+    healthStatus: "स्वास्थ्य स्थिति",
+    riskLevel: "जोखिम स्तर",
+    confidence: "विश्वास",
+    months: "महीने",
+    kgPerDay: "किग्रा/दिन",
+    hoursPerDay: "घंटे/दिन",
+    bpm: "BPM",
+    notSpecified: "निर्दिष्ट नहीं",
+    farmDashboardReport: "फार्म डैशबोर्ड रिपोर्ट",
+    completeFarmAnalysis: "पूर्ण फार्म विश्लेषण",
+    cattle: "गाय",
+    farmSummary: "फार्म सारांश",
+    dailyMilkProduction: "दैनिक दूध उत्पादन",
+    averageYieldPerCattle: "गाय के अनुसार औसत उत्पादन",
+    projectedMonthlyProduction: "अनुमानित मासिक उत्पादन",
+    mostCommonBreed: "सबसे आम नस्ल",
+    productionAnalysis: "उत्पादन विश्लेषण",
+    lowProducers: "कम उत्पादक (<15L/दिन)",
+    mediumProducers: "मध्यम उत्पादक (15-25L/दिन)",
+    highProducers: "उच्च उत्पादक (>25L/दिन)",
+    productionEfficiency: "उत्पादन दक्षता",
+    highProducersPercent: "% उच्च उत्पादक",
+    healthOverview: "स्वास्थ्य अवलोकन",
+    excellentHealth: "उत्कृष्ट स्वास्थ्य (90-100)",
+    goodHealth: "अच्छा स्वास्थ्य (80-89)",
+    fairHealth: "सामान्य स्वास्थ्य (60-79)",
+    poorHealth: "खराब स्वास्थ्य (<60)",
+    overallHealthRate: "समग्र स्वास्थ्य दर",
+    individualCattleSummary: "व्यक्तिगत गाय सारांश",
+    cattleId: "ID",
+    dailyYield: "दैनिक उत्पादन",
+    healthScore: "स्वास्थ्य स्कोर",
+    good: "अच्छा",
+    fair: "सामान्य",
+    poor: "खराब",
+    farmRecommendations: "फार्म सिफारिशें",
+    reportDisclaimer: "यह रिपोर्ट AI-संचालित विश्लेषण द्वारा बनाई गई है और पेशेवर पशु चिकित्सक सलाह के साथ उपयोग की जानी चाहिए।",
+    copyrightNotice: "© 2024 डेयरी गाय निरीक्षण सिस्टम",
+    
+    // Feed Type Options
+    greenFodder: "हरा चारा",
+    dryFodder: "सूखा चारा",
+    concentrates: "दाना मिश्रण",
+    silage: "साइलेज",
+    mixed: "मिश्रित",
+    
+    // Breed Options
+    holstein: "होल्स्टीन",
+    jersey: "जर्सी",
+    guernsey: "गर्नसी",
+    ayrshire: "एयरशायर",
+    brownSwiss: "ब्राउन स्विस",
+    simmental: "सिमेंटल",
+    
+    // Placeholders
+    selectFeedType: "चारा प्रकार चुनें",
+    dailyGrazingHours: "दैनिक चराई के घंटे",
+    bodyTemp: "शरीर का तापमान",
+    enterHeartRate: "हृदय गति दर्ज करें",
+    hours: "घंटे",
+    milkYield: "दूध उत्पादन अनुमान",
+    healthAlerts: "स्वास्थ्य और रोग चेतावनी",
+    farmReports: "फार्म रिपोर्ट",
+    addCattle: "पशु डेटा जोड़ें",
+    aiPredictions: "एआई भविष्यवाणी सेवाएं",
+    inputData: "डेटा इनपुट",
+    
+    // Stats Cards
+    totalCattle: "कुल पशु",
+    avgYield: "औसत दैनिक उत्पादन",
+    healthyAnimals: "स्वस्थ पशु",
+    
+    // Milk Yield
+    milkYield: "दूध उत्पादन भविष्यवाणी",
+    predictedYield: "अनुमानित उत्पादन",
+    litersPerDay: "लीटर/दिन",
+    weeklyTrend: "साप्ताहिक रुझान",
+    actualYield: "वास्तविक उत्पादन",
+    
+    // Forms
+    breed: "नस्ल",
+    ageMonths: "आयु (महीने)",
+    weightKg: "वजन (किलो)",
+    feedType: "आहार प्रकार",
+    feedQuantity: "आहार मात्रा (किलो)",
+    grazingHours: "चराई के घंटे",
+    bodyTemp: "शरीर का तापमान (°C)",
+    heartRate: "हृदय गति (bpm)",
+    
+    // Environment
+    temperature: "तापमान (°C)",
+    humidity: "आर्द्रता (%)",
+    season: "मौसम",
+    housingType: "आवास प्रकार",
+    
+    // Health Metrics
+    lamenessScore: "लंगड़ाहट स्कोर",
+    appetiteScore: "भूख स्कोर",
+    coatCondition: "बालों की स्थिति",
+    udderSwelling: "थन की सूजन",
+    ruminationHours: "जुगाली के घंटे",
+    walkingDistance: "चलने की दूरी (किमी)",
+    
+    // Buttons
+    predictMilkYield: "दूध उत्पादन की भविष्यवाणी करें",
+    predictDisease: "बीमारी के जोखिम की भविष्यवाणी करें",
+    saveCattleData: "पशु डेटा सहेजें",
+    generateReport: "रिपोर्ट तैयार करें",
+    exportData: "डेटा निर्यात करें",
+    addNewCattle: "नया पशु जोड़ें",
+    
+    // Reports
+    farmReports: "फार्म रिपोर्ट",
+    
+    // Dropdown Options
+    holstein: "होल्स्टीन",
+    jersey: "जर्सी",
+    gir: "गिर",
+    sahiwal: "साहीवाल",
+    mixed: "मिश्रित",
+    hay: "घास",
+    silage: "साइलेज",
+    concentrate: "दाना",
+    summer: "गर्मी",
+    winter: "सर्दी",
+    monsoon: "मानसून",
+    freeStall: "मुक्त स्टॉल",
+    tieBarn: "बंधा हुआ",
+    pasture: "चरागाह"
+  },
+  
+  gu: {
+    // Main Title
+    title: "ડેરી પશુ નિરીક્ષણ ડેશબોર્ડ",
+    subtitle: "AI-સંચાલિત અંતર્દૃષ્ટિ સાથે તમારા પશુઓના સ્વાસ્થ્ય અને દૂધ ઉત્પાદનનું નિરીક્ષણ કરો",
+    
+    // Dashboard
+    dashboard: "ડેશબોર્ડ",
+    cattleOverview: "પશુ અવલોકન",
+    overview: "અવલોકન",
+    aiPredictions: "AI આગાહી સેવાઓ",
+    inputData: "ડેટા ઇનપુટ",
+    
+    // Form Section Titles
+    basicCowInfo: "🐄 મૂળભૂત ગાયની માહિતી",
+    farmEnvironmentDetails: "🌾 ફાર્મ અને પર્યાવરણ વિગતો",
+    walkingMovementAssessment: "🚶 ચાલવા અને હલનચલન મૂલ્યાંકન",
+    eatingDigestionAssessment: "🍽️ ખાવા અને પાચન મૂલ્યાંકન",
+    udderMilkQualityCheck: "🥛 આંચળ અને દૂધ ગુણવત્તા તપાસ",
+    overallHealthAppearance: "🏥 સમગ્ર આરોગ્ય અને દેખાવ",
+    
+    // Feed Type Options
+    greenFodder: "લીલો ઘાસચારો",
+    dryFodder: "સૂકો ઘાસચારો",
+    concentrates: "દાણા મિશ્રણ",
+    silage: "સાઇલેજ",
+    mixed: "મિશ્રિત",
+    
+    // Breed Options
+    holstein: "હોલ્સ્ટીન",
+    jersey: "જર્સી",
+    guernsey: "ગર્નસી",
+    ayrshire: "એયરશાયર",
+    brownSwiss: "બ્રાઉન સ્વિસ",
+    simmental: "સિમેંટલ",
+    
+    // Placeholders
+    selectFeedType: "ખોરાકનો પ્રકાર પસંદ કરો",
+    dailyGrazingHours: "દૈનિક ચરવાના કલાકો",
+    bodyTemp: "શરીરનું તાપમાન",
+    enterHeartRate: "હૃદય ગતિ દાખલ કરો",
+    hours: "કલાકો",
+    
+    // Health Assessment
+    mobilityCheck: "ગતિશીલતા તપાસ",
+    walkingConditionAssessment: "ચાલવાની સ્થિતિ મૂલ્યાંકન",
+    selectWalkingCondition: "ચાલવાની સ્થિતિ પસંદ કરો...",
+    normalWalking: "સામાન્ય ચાલવું",
+    walksNormally: "સામાન્ય રીતે ચાલે છે, કોઈ સમસ્યા નથી",
+    slightDifference: "થોડો તફાવત",
+    walksDifferently: "સામાન્ય કરતાં થોડું અલગ ચાલે છે",
+    observeMovement: "લંગડાપણું અથવા ગતિશીલતાની સમસ્યાઓ શોધવા માટે તમારા ગાયના હલનચલન પેટર્નનું નિરીક્ષણ કરો",
+    visibleLimping: "દૃશ્યમાન લંગડાપણું",
+    clearlyLimping: "સ્પષ્ટપણે લંગડાઈ રહ્યું છે અથવા એક પગને પ્રાધાન્ય આપે છે",
+    severeLameness: "ગંભીર લંગડાપણું",
+    difficultyWalking: "ચાલવામાં અથવા ઊભા રહેવામાં મુશ્કેલી",
+    reluctantMovement: "અનિચ્છુક હલનચલન",
+    doesntWantWalk: "વધુ ચાલવાની ઇચ્છા નથી",
+    dailyWalkingDistance: "દૈનિક ચાલવાનું અંતર (કિમી)",
+    walkingPlaceholder: "ઉદા., ગોશાળાથી ખેતર સુધી ૨.૫ કિમી",
+    typicalRange: "💡 સામાન્ય શ્રેણી: ચરાઈના કદ અનુસાર ૧-૫ કિમી",
+    
+    nutritionCheck: "પોષણ તપાસ",
+    monitorAppetite: "યોગ્ય પોષણ સુનિશ્ચિત કરવા અને પાચન સમસ્યાઓ શોધવા માટે તમારા ગાયની ભૂખ અને પાચન પેટર્નનું નિરીક્ષણ કરો",
+    appetiteEatingBehavior: "ભૂખ અને ખાવાની વર્તણૂક",
+    selectEatingCondition: "ખાવાની સ્થિતિ પસંદ કરો...",
+    poorAppetite: "ઓછી ભૂખ",
+    notEatingMuch: "વધુ ખાતું નથી, રસ દાખવતું નથી",
+    normalAppetite: "સામાન્ય ભૂખ",
+    eatingRegularly: "નિયમિત અને સામાન્ય રીતે ખાય છે",
+    goodAppetite: "સારી ભૂખ",
+    eatingWell: "સારું અને ઉત્સુકતાથી ખાય છે",
+    reducedAppetite: "ઘટેલી ભૂખ",
+    eatingLess: "સામાન્ય કરતાં ઓછું ખાય છે",
+    averageAppetite: "સરેરાશ ભૂખ",
+    eatingOkay: "ઠીક ખાય છે, પણ બહુ સારું નથી",
+    excellentAppetite: "ઉત્કૃષ્ટ ભૂખ",
+    eatingVeryWell: "ખૂબ સારું ખાય છે, હંમેશા ભૂખ્યું",
+    dailyRuminationHours: "દૈનિક જુગાલી કલાકો",
+    ruminationPlaceholder: "ઉદા., ૭ કલાક (સામાન્ય ૬-૮ કલાક)",
+    normalRuminationRange: "💡 સામાન્ય શ્રેણી: દરરોજ ૬-૮ કલાક જુગાલી",
+    
+    // Health Indicators and Warnings
+    healthIndicators: "🔍 આરોગ્ય સૂચકો:",
+    healthyCowsSpend: "• નિરોગી ગાયો દરરોજ ૬-૮ કલાક જુગાલી કરે છે",
+    lessThanFiveHours: "• ૫ કલાક કરતાં ઓછું એટલે પાચન સમસ્યા હોઈ શકે",
+    watchForSigns: "• ખાધા પછી અસ્વસ્થતાના સંકેતો જુઓ",
+    
+    // Overall Health & Appearance
+    overallHealthAppearance: "✨ સમગ્ર આરોગ્ય અને દેખાવ",
+    checkGeneralHealth: "તમારા ગાયના સામાન્ય આરોગ્ય અને દેખાવની તપાસ કરો",
+    goodShineHealthy: "😊 સારી ચમક, નિરોગી દેખાતું",
+    signsOfGoodHealth: "💡 સારા આરોગ્યના સંકેતો: ચમકદાર વાળ, સામાન્ય તાપમાન (૩૮-૩૯°C), તેજસ્વી આંખો, ભીનું નાક, સક્રિય વર્તન",
+    
+    // Coat Condition Options
+    coatConditionLabel: "તમારા ગાયના વાળ/કોટ કેવા દેખાય છે?",
+    chooseCoatCondition: "વાળની સ્થિતિ પસંદ કરો",
+    veryDullRough: "😢 ખૂબ નિસ્તેજ, ખરબચડા, ટપકાવાળા વાળ",
+    somewhatDull: "😟 થોડા નિસ્તેજ, ચમક નથી",
+    averageLooking: "🤔 સરેરાશ દેખાતા, ઠીક ચમક",
+    goodShineHealthy: "😊 સારી ચમક, નિરોગી દેખાતા",
+    veryShinyGlossy: "✨ ખૂબ ચમકદાર, ચળકતા, સુંદર વાળ",
+    
+    // Temperature
+    bodyTemperatureLabel: "શરીરનું તાપમાન (°C)",
+    normalTempPlaceholder: "સામાન્ય ૩૮-૩૯°C (થર્મોમીટર વાપરો)",
+    
+    // Udder & Milk Quality
+    udderMilkQualityCheck: "🥛 આંચળ અને દૂધ ગુણવત્તા તપાસ",
+    checkUdderHealth: "તમારા ગાયના આંચળના આરોગ્ય અને દૂધની ગુણવત્તાની તપાસ કરો",
+    udderSwellingLabel: "આંચળ સૂજેલું અથવા કડક છે?",
+    chooseUdderCondition: "આંચળની સ્થિતિ પસંદ કરો",
+    normalSoftUdder: "😊 સામાન્ય, નરમ, સોજ નથી",
+    slightlySwollenUdder: "🤔 થોડું સૂજેલું અથવા કડક",
+    clearlySwollenUdder: "😟 સ્પષ્ટપણે સૂજેલું, કડક લાગે છે",
+    verySwollenUdder: "😰 ખૂબ સૂજેલું, ગરમ, દુખાવાજનક",
+    warningSignsUdder: "💡 ચેતવણી સંકેતો: ગરમ, સૂજેલું, અથવા કડક આંચળ મેસ્ટાઇટિસ સૂચવી શકે. દૂધમાં ગઠ્ઠા, લોહી, અથવા અસામાન્ય રંગ તપાસો.",
+    
+    // Heart Rate
+    heartRateLabel: "હૃદય ગતિ (પ્રતિ મિનિટ ધબકારા)",
+    normalHeartRatePlaceholder: "સામાન્ય ૬૦-૮૦ ધબકારા/મિનિટ",
+    
+    // AI Prediction Services
+    aiPredictionServices: "AI આગાહી સેવાઓ",
+    
+// Loading and Button States
+predicting: "આગાહી કરી રહ્યા છીએ...",
+analyzing: "વિશ્લેષણ કરી રહ્યા છીએ...",
+processing: "પ્રક્રિયા કરી રહ્યા છીએ...",
+detectDisease: "રોગ શોધો",
+completeAnalysis: "સંપૂર્ણ વિશ્લેષણ",
+saveCattleData: "ગાયનો ડેટા સેવ કરો",
+
+// Prediction Results UI Translations
+milkYieldPredictionResults: "દૂધ ઉત્પાદન આગાહી પરિણામો",
+diseaseDetectionResults: "રોગ શોધ પરિણામો",
+predictedMilkYield: "અનુમાનિત દૂધ ઉત્પાદન",
+day: "દિવસ",
+timestamp: "સમય",
+warnings: "ચેતવણીઓ",
+risk: "જોખમ",
+
+// Recommendation Translations
+continueCurrentPractices: "વર્તમાન વ્યવસ્થાપન પ્રથાઓ ચાલુ રાખો",
+monitorRegularly: "આરોગ્ય પરિમાણોમાં કોઈપણ ફેરફાર માટે નિયમિત નિરીક્ષણ કરો",
+maintainNutrition: "સારું પોષણ અને સ્વચ્છતા જાળવો",
+saveCattleDataToDatabase: "ગાયનો ડેટા ડેટાબેસમાં સેવ કરો",
+predictionsReady: "તમારી આગાહીઓ તૈયાર છે! ભવિષ્યના સંદર્ભ અને રિપોર્ટિંગ માટે આ ગાયની માહિતી તમારા ડેટાબેસમાં સેવ કરો.",
+    
+// Report Translations
+cattleHealthMilkReport: "ગાયના આરોગ્ય અને દૂધ ઉત્પાદન રિપોર્ટ",
+comprehensiveCattleReport: "વ્યાપક ગાય વિશ્લેષણ રિપોર્ટ",
+dairyCattleMonitoring: "ડેરી ગાય નિરીક્ષણ સિસ્ટમ",
+aiPoweredPlatform: "AI-સંચાલિત ગાય વ્યવસ્થાપન પ્લેટફોર્મ",
+generatedOn: "પર બનાવવામાં આવ્યું",
+cattleInformation: "ગાયની માહિતી",
+aiPredictionsAnalysis: "AI આગાહી અને વિશ્લેષણ",
+recommendations: "ભલામણો",
+milkYieldPrediction: "દૂધ ઉત્પાદન આગાહી",
+predictedDailyYield: "અનુમાનિત દૈનિક ઉત્પાદન",
+confidenceLevel: "વિશ્વાસ સ્તર",
+status: "સ્થિતિ",
+healthStatusAnalysis: "આરોગ્ય સ્થિતિ વિશ્લેષણ",
+healthStatus: "આરોગ્ય સ્થિતિ",
+riskLevel: "જોખમ સ્તર",
+confidence: "વિશ્વાસ",
+months: "મહિના",
+kgPerDay: "કિગ્રા/દિવસ",
+hoursPerDay: "કલાક/દિવસ",
+bpm: "BPM",
+notSpecified: "ઉલ્લેખ નથી",
+farmDashboardReport: "ફાર્મ ડેશબોર્ડ રિપોર્ટ",
+completeFarmAnalysis: "સંપૂર્ણ ફાર્મ વિશ્લેષણ",
+cattle: "ગાય",
+farmSummary: "ફાર્મ સારાંશ",
+dailyMilkProduction: "દૈનિક દૂધ ઉત્પાદન",
+averageYieldPerCattle: "ગાય દીઠ સરેરાશ ઉત્પાદન",
+projectedMonthlyProduction: "અનુમાનિત માસિક ઉત્પાદન",
+mostCommonBreed: "સૌથી સામાન્ય જાતિ",
+productionAnalysis: "ઉત્પાદન વિશ્લેષણ",
+lowProducers: "ઓછા ઉત્પાદકો (<15L/દિવસ)",
+mediumProducers: "મધ્યમ ઉત્પાદકો (15-25L/દિવસ)",
+highProducers: "ઉચ્ચ ઉત્પાદકો (>25L/દિવસ)",
+productionEfficiency: "ઉત્પાદન કાર્યક્ષમતા",
+highProducersPercent: "% ઉચ્ચ ઉત્પાદકો",
+healthOverview: "આરોગ્ય અવલોકન",
+excellentHealth: "ઉત્કૃષ્ટ આરોગ્ય (90-100)",
+goodHealth: "સારું આરોગ્ય (80-89)",
+fairHealth: "સામાન્ય આરોગ્ય (60-79)",
+poorHealth: "નબળું આરોગ્ય (<60)",
+overallHealthRate: "એકંદર આરોગ્ય દર",
+individualCattleSummary: "વ્યક્તિગત ગાય સારાંશ",
+cattleId: "ID",
+dailyYield: "દૈનિક ઉત્પાદન",
+healthScore: "આરોગ્ય સ્કોર",
+good: "સારું",
+fair: "સામાન્ય",
+poor: "નબળું",
+farmRecommendations: "ફાર્મ ભલામણો",
+reportDisclaimer: "આ રિપોર્ટ AI-સંચાલિત વિશ્લેષણ દ્વારા બનાવવામાં આવી છે અને વ્યાવસાયિક પશુચિકિત્સક સલાહ સાથે ઉપયોગ કરવી જોઈએ.",
+copyrightNotice: "© 2024 ડેરી ગાય નિરીક્ષણ સિસ્ટમ",
+    aiPoweredPlatform: "AI-સંચાલિત ગાય વ્યવસ્થાપન પ્લેટફોર્મ",
+    generatedOn: "પર બનાવવામાં આવ્યું",
+    cattleInformation: "ગાયની માહિતી",
+    aiPredictionsAnalysis: "AI આગાહી અને વિશ્લેષણ",
+    recommendations: "ભલામણો",
+    milkYieldPrediction: "દૂધ ઉત્પાદન આગાહી",
+    predictedDailyYield: "અનુમાનિત દૈનિક ઉત્પાદન",
+    confidenceLevel: "વિશ્વાસ સ્તર",
+    status: "સ્થિતિ",
+    healthStatusAnalysis: "આરોગ્ય સ્થિતિ વિશ્લેષણ",
+    healthStatus: "આરોગ્ય સ્થિતિ",
+    riskLevel: "જોખમ સ્તર",
+    confidence: "વિશ્વાસ",
+    months: "મહિના",
+    kgPerDay: "કિગ્રા/દિવસ",
+    hoursPerDay: "કલાક/દિવસ",
+    bpm: "BPM",
+    notSpecified: "ઉલ્લેખ નથી",
+    farmDashboardReport: "ફાર્મ ડેશબોર્ડ રિપોર્ટ",
+    completeFarmAnalysis: "સંપૂર્ણ ફાર્મ વિશ્લેષણ",
+    cattle: "ગાય",
+    farmSummary: "ફાર્મ સારાંશ",
+    dailyMilkProduction: "દૈનિક દૂધ ઉત્પાદન",
+    averageYieldPerCattle: "ગાય દીઠ સરેરાશ ઉત્પાદન",
+    projectedMonthlyProduction: "અનુમાનિત માસિક ઉત્પાદન",
+    mostCommonBreed: "સૌથી સામાન્ય જાતિ",
+    productionAnalysis: "ઉત્પાદન વિશ્લેષણ",
+    lowProducers: "ઓછા ઉત્પાદકો (<15L/દિવસ)",
+    mediumProducers: "મધ્યમ ઉત્પાદકો (15-25L/દિવસ)",
+    highProducers: "ઉચ્ચ ઉત્પાદકો (>25L/દિવસ)",
+    productionEfficiency: "ઉત્પાદન કાર્યક્ષમતા",
+    highProducersPercent: "% ઉચ્ચ ઉત્પાદકો",
+    healthOverview: "આરોગ્ય અવલોકન",
+    excellentHealth: "ઉત્કૃષ્ટ આરોગ્ય (90-100)",
+    goodHealth: "સારું આરોગ્ય (80-89)",
+    fairHealth: "સામાન્ય આરોગ્ય (60-79)",
+    poorHealth: "નબળું આરોગ્ય (<60)",
+    overallHealthRate: "એકંદર આરોગ્ય દર",
+    individualCattleSummary: "વ્યક્તિગત ગાય સારાંશ",
+    cattleId: "ID",
+    dailyYield: "દૈનિક ઉત્પાદન",
+    healthScore: "આરોગ્ય સ્કોર",
+    good: "સારું",
+    fair: "સામાન્ય",
+    poor: "નબળું",
+    farmRecommendations: "ફાર્મ ભલામણો",
+    reportDisclaimer: "આ રિપોર્ટ AI-સંચાલિત વિશ્લેષણ દ્વારા બનાવવામાં આવી છે અને વ્યાવસાયિક પશુચિકિત્સક સલાહ સાથે ઉપયોગ કરવી જોઈએ.",
+    copyrightNotice: "© 2024 ડેરી ગાય નિરીક્ષણ સિસ્ટમ",
+    
+    // Stats Cards
+    totalCattle: "કુલ પશુઓ",
+    avgYield: "સરેરાશ દૈનિક ઉત્પાદન",
+    healthyAnimals: "નિરોગી પશુઓ",
+    
+    // Milk Yield
+    milkYield: "દૂધ ઉત્પાદન આગાહી",
+    predictedYield: "અનુમાનિત ઉત્પાદન",
+    litersPerDay: "લીટર/દિવસ",
+    weeklyTrend: "સાપ્તાહિક વલણ",
+    actualYield: "વાસ્તવિક ઉત્પાદન",
+    
+    // Forms
+    breed: "જાતિ",
+    ageMonths: "ઉંમર (મહિના)",
+    weightKg: "વજન (કિલો)",
+    feedType: "આહાર પ્રકાર",
+    feedQuantity: "આહાર માત્રા (કિલો)",
+    grazingHours: "ચરવાના કલાકો",
+    bodyTemp: "શરીરનું તાપમાન (°C)",
+    heartRate: "હૃદય ગતિ (bpm)",
+    
+    // Environment
+    temperature: "તાપમાન (°C)",
+    humidity: "ભેજ (%)",
+    season: "મોસમ",
+    housingType: "આવાસ પ્રકાર",
+    
+    // Health Metrics
+    lamenessScore: "લંગડાપણું સ્કોર",
+    appetiteScore: "ભૂખ સ્કોર",
+    coatCondition: "વાળની સ્થિતિ",
+    udderSwelling: "આંચળની સોજ",
+    ruminationHours: "જાવવાના કલાકો",
+    walkingDistance: "ચાલવાનું અંતર (કિમી)",
+    
+    // Buttons
+    predictMilkYield: "દૂધ ઉત્પાદનની આગાહી કરો",
+    predictDisease: "બીમારીના જોખમની આગાહી કરો",
+    saveCattleData: "પશુ ડેટા સાચવો",
+    generateReport: "રિપોર્ટ તૈયાર કરો",
+    exportData: "ડેટા નિકાસ કરો",
+    addCattle: "પશુ ડેટા ઉમેરો",
+    // Dashboard
+    dashboard: "ડેશબોર્ડ",
+    cattleOverview: "પશુ અવલોકન",
+    overview: "અવલોકન",
+    inputData: "ડેટા ઇનપુટ",
+    breed: "પશુની જાતિ",
+    
+    // Reports
+    farmReports: "ફાર્મ રિપોર્ટ",
+    
+    // Dropdown Options
+    holstein: "હોલ્સ્ટીન",
+    jersey: "જર્સી",
+    gir: "ગિર",
+    sahiwal: "સાહીવાલ",
+    mixed: "મિશ્રિત",
+    hay: "ઘાસ",
+    silage: "સાઇલેજ",
+    concentrate: "દાણા",
+    summer: "ઉનાળો",
+    winter: "શિયાળો",
+    monsoon: "ચોમાસું",
+    freeStall: "મુક્ત સ્ટોલ",
+    tieBarn: "બાંધેલું",
+    pasture: "ચરાઈ"
+  },
+  
+  mr: {
+    // Main Title
+    title: "दुग्धशाळा गुरे निरीक्षण डॅशबोर्ड",
+    subtitle: "AI-चालित अंतर्दृष्टीसह आपल्या गुरांच्या आरोग्य आणि दूध उत्पादनाचे निरीक्षण करा",
+    
+    // Dashboard
+    dashboard: "डॅशबोर्ड",
+    cattleOverview: "गुरांचे अवलोकन",
+    overview: "अवलोकन",
+    aiPredictions: "AI भविष्यवाणी सेवा",
+    inputData: "डेटा इनपुट",
+    
+    // Form Section Titles
+    basicCowInfo: "🐄 मूलभूत गायीची माहिती",
+    farmEnvironmentDetails: "🌾 फार्म आणि पर्यावरण तपशील",
+    walkingMovementAssessment: "🚶 चालणे आणि हालचाल मूल्यांकन",
+    eatingDigestionAssessment: "🍽️ खाणे आणि पचन मूल्यांकन",
+    udderMilkQualityCheck: "🥛 कांडी आणि दूध गुणवत्ता तपासणी",
+    overallHealthAppearance: "🏥 एकूण आरोग्य आणि दिसणे",
+    
+    // Health Assessment
+    mobilityCheck: "गतिशीलता तपासणी",
+    walkingConditionAssessment: "चालण्याच्या स्थितीचे मूल्यांकन",
+    observeMovement: "लंगडेपणा किंवा गतिशीलतेच्या समस्या शोधण्यासाठी आपल्या गायीच्या हालचालीच्या पॅटर्नचे निरीक्षण करा",
+    selectWalkingCondition: "चालण्याची स्थिती निवडा...",
+    normalWalking: "सामान्य चालणे",
+    walksNormally: "सामान्यपणे चालते, कोणतीही समस्या नाही",
+    slightDifference: "थोडा फरक",
+    walksDifferently: "सामान्यपेक्षा थोडे वेगळे चालते",
+    visibleLimping: "दिसणारे लंगडेपणा",
+    clearlyLimping: "स्पष्टपणे लंगडत आहे किंवा एका पायाला प्राधान्य देत आहे",
+    severeLameness: "गंभीर लंगडेपणा",
+    difficultyWalking: "चालण्यात किंवा उभे राहण्यात अडचण",
+    reluctantMovement: "अनिच्छुक हालचाल",
+    doesntWantWalk: "जास्त चालण्याची इच्छा नाही",
+    dailyWalkingDistance: "दैनिक चालण्याचे अंतर (किमी)",
+    walkingPlaceholder: "उदा., गोशाळेपासून शेतापर्यंत २.५ किमी",
+    typicalRange: "💡 सामान्य श्रेणी: कुरणाच्या आकारानुसार १-५ किमी",
+    
+    nutritionCheck: "पोषण तपासणी",
+    monitorAppetite: "योग्य पोषण सुनिश्चित करण्यासाठी आणि पाचन संबंधी समस्या शोधण्यासाठी आपल्या गायीच्या भूक आणि पाचन पॅटर्नचे निरीक्षण करा",
+    appetiteEatingBehavior: "भूक आणि खाण्याची वर्तणूक",
+    selectEatingCondition: "खाण्याची स्थिती निवडा...",
+    poorAppetite: "कमी भूक",
+    notEatingMuch: "जास्त खात नाही, रस दाखवत नाही",
+    normalAppetite: "सामान्य भूक",
+    eatingRegularly: "नियमित आणि सामान्यपणे खाते",
+    goodAppetite: "चांगली भूक",
+    eatingWell: "चांगले आणि उत्सुकतेने खाते",
+    reducedAppetite: "कमी झालेली भूक",
+    eatingLess: "सामान्यपेक्षा कमी खाते",
+    averageAppetite: "सरासरी भूक",
+    eatingOkay: "ठीक खाते, पण फार चांगले नाही",
+    excellentAppetite: "उत्कृष्ट भूक",
+    eatingVeryWell: "खूप चांगले खाते, नेहमी भुकेले",
+    dailyRuminationHours: "दैनिक जुगाली तास",
+    ruminationPlaceholder: "उदा., ७ तास (सामान्य ६-८ तास)",
+    normalRuminationRange: "💡 सामान्य श्रेणी: दररोज ६-८ तास जुगाली",
+    
+    // Health Indicators and Warnings
+    healthIndicators: "🔍 आरोग्य निर्देशक:",
+    healthyCowsSpend: "• निरोगी गाई दररोज ६-८ तास जुगाली करतात",
+    lessThanFiveHours: "• ५ तासांपेक्षा कमी म्हणजे पाचन समस्या असू शकते",
+    watchForSigns: "• खाल्यानंतर अस्वस्थतेची चिन्हे पहा",
+    
+    // Overall Health & Appearance
+    checkGeneralHealth: "आपल्या गायीचे सामान्य आरोग्य आणि दिसणे तपासा",
+    coatConditionLabel: "आपल्या गायीचे केस/कोट कसे दिसतात?",
+    chooseCoatCondition: "केसांची स्थिती निवडा",
+    veryDullRough: "😢 खूप निस्तेज, खडबडीत, ठिपके असलेले केस",
+    somewhatDull: "😟 थोडे निस्तेज, चमक नाही",
+    averageLooking: "🤔 सरासरी दिसणारे, ठीक चमक",
+    goodShineHealthy: "😊 चांगली चमक, निरोगी दिसणारे",
+    veryShinyGlossy: "✨ खूप चमकदार, चकाकणारे, सुंदर केस",
+    bodyTemperatureLabel: "शरीराचे तापमान (°C)",
+    normalTempPlaceholder: "सामान्य ३८-३९°C (थर्मामीटर वापरा)",
+    signsOfGoodHealth: "💡 चांगल्या आरोग्याची चिन्हे: चमकदार केस, सामान्य तापमान (३८-३९°C), चमकदार डोळे, ओले नाक, सक्रिय वर्तन",
+    
+    // Udder & Milk Quality
+    checkUdderHealth: "आपल्या गायीच्या कांडीचे आरोग्य आणि दूधाची गुणवत्ता तपासा",
+    udderSwellingLabel: "कांडी सुजलेली किंवा कडक आहे का?",
+    chooseUdderCondition: "कांडीची स्थिती निवडा",
+    normalSoftUdder: "😊 सामान्य, मऊ, सूज नाही",
+    slightlySwollenUdder: "🤔 थोडी सुजलेली किंवा घट्ट",
+    clearlySwollenUdder: "😟 स्पष्टपणे सुजलेली, कडक वाटते",
+    verySwollenUdder: "😰 खूप सुजलेली, गरम, वेदनादायक",
+    heartRateLabel: "हृदय गती (प्रति मिनिट धडधड)",
+    normalHeartRatePlaceholder: "सामान्य ६०-८० धडधड/मिनिट",
+    warningSignsUdder: "💡 चेतावणी चिन्हे: गरम, सुजलेली किंवा कडक कांडी म्हणजे मॅस्टायटिस असू शकते. दूधात गुठळ्या, रक्त किंवा असामान्य रंग तपासा.",
+    
+    // AI Prediction Services
+    aiPredictionServices: "AI भविष्यवाणी सेवा",
+    predictMilkYield: "दूध उत्पादनाची भविष्यवाणी",
+    detectDisease: "रोग शोधा",
+    completeAnalysis: "संपूर्ण विश्लेषण",
+    
+    // Loading and Button States
+    predicting: "भविष्यवाणी करत आहे...",
+    analyzing: "विश्लेषण करत आहे...",
+    processing: "प्रक्रिया करत आहे...",
+    detectDisease: "रोग शोधा",
+    completeAnalysis: "संपूर्ण विश्लेषण",
+    saveCattleData: "गायीचा डेटा सेव्ह करा",
+    
+    // Prediction Results UI Translations
+    milkYieldPredictionResults: "दूध उत्पादन भविष्यवाणी परिणाम",
+    diseaseDetectionResults: "रोग शोध परिणाम",
+    predictedMilkYield: "अंदाजित दूध उत्पादन",
+    day: "दिवस",
+    timestamp: "वेळ",
+    warnings: "चेतावणी",
+    risk: "जोखीम",
+    
+    // Recommendation Translations
+    continueCurrentPractices: "सध्याच्या व्यवस्थापन पद्धती चालू ठेवा",
+    monitorRegularly: "आरोग्य मापदंडांमध्ये कोणत्याही बदलासाठी नियमित निरीक्षण करा",
+    maintainNutrition: "चांगले पोषण आणि स्वच्छता राखा",
+    saveCattleDataToDatabase: "गायीचा डेटा डेटाबेसमध्ये सेव्ह करा",
+    predictionsReady: "तुमची भविष्यवाणी तयार आहे! भविष्यातील संदर्भ आणि अहवालासाठी या गायीची माहिती तुमच्या डेटाबेसमध्ये सेव्ह करा.",
+    
+    // Report Translations
+    cattleHealthMilkReport: "गायीचे आरोग्य आणि दूध उत्पादन अहवाल",
+    comprehensiveCattleReport: "व्यापक गाय विश्लेषण अहवाल",
+    dairyCattleMonitoring: "डेरी गाय निरीक्षण सिस्टम",
+    aiPoweredPlatform: "AI-चालित गाय व्यवस्थापन प्लॅटफॉर्म",
+    generatedOn: "वर तयार केले",
+    cattleInformation: "गायीची माहिती",
+    aiPredictionsAnalysis: "AI भविष्यवाणी आणि विश्लेषण",
+    recommendations: "शिफारसी",
+    milkYieldPrediction: "दूध उत्पादन भविष्यवाणी",
+    predictedDailyYield: "अंदाजित दैनिक उत्पादन",
+    confidenceLevel: "विश्वास पातळी",
+    status: "स्थिती",
+    healthStatusAnalysis: "आरोग्य स्थिती विश्लेषण",
+    healthStatus: "आरोग्य स्थिती",
+    riskLevel: "जोखीम पातळी",
+    confidence: "विश्वास",
+    months: "महिने",
+    kgPerDay: "किग्रा/दिवस",
+    hoursPerDay: "तास/दिवस",
+    bpm: "BPM",
+    notSpecified: "निर्दिष्ट नाही",
+    farmDashboardReport: "फार्म डॅशबोर्ड अहवाल",
+    completeFarmAnalysis: "संपूर्ण फार्म विश्लेषण",
+    cattle: "गाय",
+    farmSummary: "फार्म सारांश",
+    dailyMilkProduction: "दैनिक दूध उत्पादन",
+    averageYieldPerCattle: "गाय प्रति सरासरी उत्पादन",
+    projectedMonthlyProduction: "अंदाजित मासिक उत्पादन",
+    mostCommonBreed: "सर्वात सामान्य जात",
+    productionAnalysis: "उत्पादन विश्लेषण",
+    lowProducers: "कमी उत्पादक (<15L/दिवस)",
+    mediumProducers: "मध्यम उत्पादक (15-25L/दिवस)",
+    highProducers: "उच्च उत्पादक (>25L/दिवस)",
+    productionEfficiency: "उत्पादन कार्यक्षमता",
+    highProducersPercent: "% उच्च उत्पादक",
+    healthOverview: "आरोग्य अवलोकन",
+    excellentHealth: "उत्कृष्ट आरोग्य (90-100)",
+    goodHealth: "चांगले आरोग्य (80-89)",
+    fairHealth: "सामान्य आरोग्य (60-79)",
+    poorHealth: "खराब आरोग्य (<60)",
+    overallHealthRate: "एकूण आरोग्य दर",
+    individualCattleSummary: "वैयक्तिक गाय सारांश",
+    cattleId: "ID",
+    dailyYield: "दैनिक उत्पादन",
+    healthScore: "आरोग्य स्कोर",
+    good: "चांगले",
+    fair: "सामान्य",
+    poor: "खराब",
+    farmRecommendations: "फार्म शिफारसी",
+    reportDisclaimer: "हा अहवाल AI-चालित विश्लेषणाद्वारे तयार केला आहे आणि व्यावसायिक पशुवैद्यकीय सल्ल्यासह वापरला जावा.",
+    copyrightNotice: "© 2024 डेरी गाय निरीक्षण सिस्टम",
+    
+    // Feed Type Options
+    greenFodder: "हिरवा चारा",
+    dryFodder: "सुका चारा",
+    concentrates: "दाणा मिश्रण",
+    silage: "सायलेज",
+    mixed: "मिश्रित",
+    
+    // Breed Options - Using proper local breed names
+    holstein: "होल्स्टीन फ्रिजियन",
+    jersey: "जर्सी",
+    guernsey: "गर्नसी",
+    ayrshire: "एयरशायर",
+    brownSwiss: "ब्राउन स्विस",
+    simmental: "सिमेंटल",
+    
+    // Placeholders
+    selectFeedType: "खाद्याचा प्रकार निवडा",
+    dailyGrazingHours: "दैनिक चरण्याचे तास",
+    bodyTemp: "शरीराचे तापमान",
+    enterHeartRate: "हृदय गती प्रविष्ट करा",
+    hours: "तास",
+    
+    // Health Assessment
+    mobilityCheck: "हालचाल तपासणी",
+    walkingConditionAssessment: "चालण्याची स्थिती मूल्यांकन",
+    selectWalkingCondition: "चालण्याची स्थिती निवडा...",
+    normalWalking: "सामान्य चालणे",
+    walksNormally: "सामान्यपणे चालते, कोणतीही समस्या नाही",
+    slightDifference: "थोडा फरक",
+    walksDifferently: "नेहमीपेक्षा थोडे वेगळे चालते",
+    observeMovement: "लंगडेपणा किंवा हालचालीच्या समस्या शोधण्यासाठी आपल्या गायीच्या हालचालीचे निरीक्षण करा",
+    visibleLimping: "दिसणारे लंगडे",
+    clearlyLimping: "स्पष्टपणे लंगडत आहे किंवा एका पायाला पसंती देत आहे",
+    severeLameness: "गंभीर लंगडेपणा",
+    difficultyWalking: "चालण्यात किंवा उभे राहण्यात अडचण",
+    reluctantMovement: "अनिच्छुक हालचाल",
+    doesntWantWalk: "जास्त चालायला इच्छा नाही",
+    dailyWalkingDistance: "दैनिक चालण्याचे अंतर (किमी)",
+    walkingPlaceholder: "उदा., गोठ्यापासून शेतापर्यंत २.५ किमी",
+    typicalRange: "💡 सामान्य श्रेणी: कुरणाच्या आकारानुसार १-५ किमी",
+    
+    nutritionCheck: "पोषण तपासणी",
+    monitorAppetite: "योग्य पोषण सुनिश्चित करण्यासाठी आणि पाचन समस्या शोधण्यासाठी आपल्या गायीची भूक आणि पाचन पद्धतींचे निरीक्षण करा",
+    appetiteEatingBehavior: "भूक आणि खाण्याची वर्तणूक",
+    selectEatingCondition: "खाण्याची स्थिती निवडा...",
+    poorAppetite: "कमी भूक",
+    notEatingMuch: "जास्त खात नाही, रस दाखवत नाही",
+    normalAppetite: "सामान्य भूक",
+    eatingRegularly: "नियमित आणि सामान्यपणे खातो",
+    goodAppetite: "चांगली भूक",
+    eatingWell: "चांगले आणि उत्सुकतेने खातो",
+    reducedAppetite: "कमी झालेली भूक",
+    eatingLess: "नेहमीपेक्षा कमी खातो",
+    averageAppetite: "सरासरी भूक",
+    eatingOkay: "ठीक खातो, पण फार चांगले नाही",
+    excellentAppetite: "उत्कृष्ट भूक",
+    eatingVeryWell: "खूप चांगले खातो, नेहमी भुकेले",
+    dailyRuminationHours: "दैनिक जुगाली तास",
+    ruminationPlaceholder: "उदा., ७ तास (सामान्य ६-८ तास)",
+    normalRuminationRange: "💡 सामान्य श्रेणी: दररोज ६-८ तास जुगाली",
+    
+    // Health Indicators and Warnings
+    healthIndicators: "🔍 आरोग्य निर्देशक:",
+    healthyCowsSpend: "• निरोगी गाई दररोज ६-८ तास जुगाली करतात",
+    lessThanFiveHours: "• ५ तासांपेक्षा कमी म्हणजे पाचन समस्या असू शकते",
+    watchForSigns: "• खाल्यानंतर अस्वस्थतेची चिन्हे पहा",
+    
+    // Overall Health & Appearance
+    overallHealthAppearance: "✨ एकूण आरोग्य आणि दिसणे",
+    checkGeneralHealth: "आपल्या गायीचे सामान्य आरोग्य आणि दिसणे तपासा",
+    goodShineHealthy: "😊 चांगली चमक, निरोगी दिसणारी",
+    signsOfGoodHealth: "💡 चांगल्या आरोग्याची चिन्हे: चमकदार केस, सामान्य तापमान (३८-३९°C), चमकदार डोळे, ओले नाक, सक्रिय वर्तन",
+    
+    // Udder & Milk Quality
+    udderMilkQualityCheck: "🥛 कांडी आणि दूध गुणवत्ता तपासणी",
+    checkUdderHealth: "आपल्या गायीच्या कांडीचे आरोग्य आणि दूधाची गुणवत्ता तपासा",
+    slightlySwollen: "🤔 थोडी सुजलेली किंवा घट्ट",
+    warningSignsUdder: "💡 चेतावणी चिन्हे: गरम, सुजलेली किंवा कडक कांडी म्हणजे मॅस्टायटिस असू शकते. दूधात गुठळ्या, रक्त किंवा असामान्य रंग तपासा.",
+    
+    // AI Prediction Services
+    aiPredictionServices: "AI भविष्यवाणी सेवा",
+    predictMilkYield: "दूध उत्पादनाची भविष्यवाणी",
+    detectDisease: "रोग शोधा",
+    completeAnalysis: "संपूर्ण विश्लेषण",
+    
+    // Coat Condition Options
+    coatConditionLabel: "आपल्या गायीचे केस/कोट कसे दिसतात?",
+    chooseCoatCondition: "केसांची स्थिती निवडा",
+    veryDullRough: "😢 खूप निस्तेज, खडबडीत, ठिपके असलेले केस",
+    somewhatDull: "😟 थोडे निस्तेज, चमक नाही",
+    averageLooking: "🤔 सरासरी दिसणारे, ठीक चमक",
+    goodShineHealthy: "😊 चांगली चमक, निरोगी दिसणारे",
+    veryShinyGlossy: "✨ खूप चमकदार, चकाकणारे, सुंदर केस",
+    
+    // Temperature
+    bodyTemperatureLabel: "शरीराचे तापमान (°C)",
+    normalTempPlaceholder: "सामान्य ३८-३९°C (थर्मामीटर वापरा)",
+    
+    // Udder Condition Options
+    udderSwellingLabel: "कांडी सुजलेली किंवा कडक आहे का?",
+    chooseUdderCondition: "कांडीची स्थिती निवडा",
+    normalSoftUdder: "😊 सामान्य, मऊ, सूज नाही",
+    slightlySwollenUdder: "🤔 थोडी सुजलेली किंवा घट्ट",
+    clearlySwollenUdder: "😟 स्पष्टपणे सुजलेली, कडक वाटते",
+    verySwollenUdder: "😰 खूप सुजलेली, गरम, वेदनादायक",
+    
+    // Heart Rate
+    heartRateLabel: "हृदय गती (प्रति मिनिट धडधड)",
+    normalHeartRatePlaceholder: "सामान्य ६०-८० धडधड/मिनिट",
+    
+    // Loading and Button States
+    predicting: "भविष्यवाणी करत आहे...",
+    analyzing: "विश्लेषण करत आहे...",
+    processing: "प्रक्रिया करत आहे...",
+    
+    // Stats Cards
+    totalCattle: "एकूण गुरे",
+    avgYield: "सरासरी दैनिक उत्पादन",
+    healthyAnimals: "निरोगी गुरे",
+    
+    // Milk Yield
+    milkYield: "दूध उत्पादन भविष्यवाणी",
+    predictedYield: "अंदाजित उत्पादन",
+    litersPerDay: "लिटर/दिवस",
+    weeklyTrend: "साप्ताहिक प्रवृत्ती",
+    actualYield: "वास्तविक उत्पादन",
+    
+    // Forms
+    breed: "जात",
+    ageMonths: "वय (महिने)",
+    weightKg: "वजन (किलो)",
+    feedType: "आहार प्रकार",
+    feedQuantity: "आहार प्रमाण (किलो)",
+    grazingHours: "चरण्याचे तास",
+    bodyTemp: "शरीराचे तापमान (°C)",
+    heartRate: "हृदयाची गती (bpm)",
+    
+    // Environment
+    temperature: "तापमान (°C)",
+    humidity: "आर्द्रता (%)",
+    season: "हंगाम",
+    housingType: "निवास प्रकार",
+    
+    // Health Metrics
+    lamenessScore: "लंगडेपणाचा स्कोर",
+    appetiteScore: "भूक स्कोर",
+    coatCondition: "केसांची स्थिती",
+    udderSwelling: "कांडीची सूज",
+    ruminationHours: "रोमंथनाचे तास",
+    walkingDistance: "चालण्याचे अंतर (किमी)",
+    
+    // Buttons
+    predictMilkYield: "दूध उत्पादनाची भविष्यवाणी करा",
+    predictDisease: "आजाराच्या जोखमीची भविष्यवाणी करा",
+    saveCattleData: "गुरांचा डेटा जतन करा",
+    generateReport: "अहवाल तयार करा",
+    exportData: "डेटा निर्यात करा",
+    addNewCattle: "नवीन गुरे जोडा",
+    
+    // Reports
+    farmReports: "शेत अहवाल",
+    
+    // Dropdown Options
+    holstein: "होल्स्टाईन",
+    jersey: "जर्सी",
+    gir: "गिर",
+    sahiwal: "साहीवाल",
+    mixed: "मिश्रित",
+    hay: "गवत",
+    silage: "सायलेज",
+    concentrate: "दाणा",
+    summer: "उन्हाळा",
+    winter: "हिवाळा",
+    monsoon: "पावसाळा",
+    freeStall: "मुक्त स्टॉल",
+    tieBarn: "बांधलेले",
+    pasture: "कुरण"
+  }
+}
+
+export function getTranslation(language, key, params = {}) {
+  console.log(`Translation request: language=${language}, key=${key}`)
+  let translation = translations[language]?.[key] || translations.en[key] || key
+  console.log(`Translation result: ${translation}`)
+  
+  // Replace parameters in translation string
+  if (params && typeof translation === 'string') {
+    Object.keys(params).forEach(param => {
+      translation = translation.replace(`{${param}}`, params[param])
+    })
+  }
+  
+  return translation
+}
