@@ -1,13 +1,76 @@
 import jsPDF from 'jspdf'
 import html2canvas from 'html2canvas'
 import { supabase } from './supabase'
-import { translations } from './translations'
 
 export class ReportGenerator {
   constructor(language = 'en') {
-    this.doc = null
-    this.language = language
-    this.t = translations[language] || translations.en
+    try {
+      this.doc = null
+      this.language = language
+      // Use hardcoded English text to avoid translation errors
+      this.t = {
+        farmSummary: 'Farm Summary',
+        productionAnalysis: 'Production Analysis', 
+        healthOverview: 'Health Overview',
+        recommendations: 'Recommendations',
+        cattleHealthMilkReport: 'Cattle Health & Milk Report',
+        comprehensiveCattleReport: 'Comprehensive Cattle Report',
+        dairyCattleMonitoring: 'Dairy Cattle Monitoring',
+        aiPoweredPlatform: 'AI-Powered Platform',
+        cattleInfo: 'Cattle Information',
+        milkYieldPrediction: 'Milk Yield Prediction',
+        diseaseDetection: 'Disease Detection',
+        inputData: 'Input Data',
+        predictionResults: 'Prediction Results',
+        healthMetrics: 'Health Metrics',
+        environmentalFactors: 'Environmental Factors',
+        notSpecified: 'Not Specified',
+        months: 'months',
+        feedType: 'Feed Type',
+        feedQuantity: 'Feed Quantity',
+        kgPerDay: 'kg/day',
+        grazingHours: 'Grazing Hours',
+        hoursPerDay: 'hours/day',
+        bodyTemperature: 'Body Temperature',
+        heartRate: 'Heart Rate',
+        bpm: 'BPM',
+        environmentalTemperature: 'Environmental Temperature',
+        humidity: 'Humidity',
+        cattleId: 'Cattle ID',
+        generatedOn: 'Generated On',
+        breed: 'Breed',
+        age: 'Age',
+        weight: 'Weight',
+        dailyYield: 'Daily Yield',
+        healthScore: 'Health Score',
+        status: 'Status',
+        good: 'Good',
+        fair: 'Fair', 
+        poor: 'Poor',
+        individualCattleSummary: 'Individual Cattle Summary',
+        farmReports: 'Farm Reports',
+        totalCattle: 'Total Cattle',
+        dailyMilkProduction: 'Daily Milk Production',
+        averageYieldPerCattle: 'Average Yield per Cattle',
+        projectedMonthlyProduction: 'Projected Monthly',
+        mostCommonBreed: 'Most Common Breed',
+        lowProducers: 'Low Producers (<15L)',
+        mediumProducers: 'Medium Producers (15-25L)',
+        highProducers: 'High Producers (>25L)',
+        productionEfficiency: 'Production Efficiency',
+        excellentHealth: 'Excellent Health (90-100)',
+        goodHealth: 'Good Health (80-89)',
+        fairHealth: 'Fair Health (60-79)',
+        poorHealth: 'Poor Health (<60)',
+        overallHealthRate: 'Overall Health Score',
+        healthyCattle: 'Disease-Free Cattle',
+        farmRecommendations: 'Farm Recommendations'
+      }
+      console.log('ReportGenerator constructor completed successfully')
+    } catch (error) {
+      console.error('Error in ReportGenerator constructor:', error)
+      throw error
+    }
   }
 
   // Generate comprehensive PDF report
@@ -16,10 +79,10 @@ export class ReportGenerator {
     
     // Set up document properties
     this.doc.setProperties({
-      title: `${this.t.cattleHealthMilkReport} - ${cattleData.cattle_id}`,
-      subject: this.t.comprehensiveCattleReport,
-      author: this.t.dairyCattleMonitoring,
-      creator: this.t.aiPoweredPlatform
+      title: `Cattle Health & Milk Report - ${cattleData.cattle_id}`,
+      subject: 'Comprehensive Cattle Report',
+      author: 'Dairy Cattle Monitoring',
+      creator: 'AI-Powered Platform'
     })
 
     // Add header
@@ -27,6 +90,9 @@ export class ReportGenerator {
     
     // Add cattle information
     this.addCattleInfo(cattleData, userInput)
+    
+    // Add AI predictions section
+    this.addPredictionsSection(predictions)
     
     // Add recommendations
     this.addRecommendations(predictions)
@@ -43,16 +109,16 @@ export class ReportGenerator {
     // Title
     this.doc.setFontSize(20)
     this.doc.setFont(undefined, 'bold')
-    this.doc.text(this.t.cattleHealthMilkReport.toUpperCase(), pageWidth / 2, 20, { align: 'center' })
+    this.doc.text('CATTLE HEALTH & MILK REPORT', pageWidth / 2, 20, { align: 'center' })
     
     // Subtitle
     this.doc.setFontSize(14)
     this.doc.setFont(undefined, 'normal')
-    this.doc.text(`${this.t.cattleId}: ${cattleData.cattle_id || 'N/A'}`, pageWidth / 2, 30, { align: 'center' })
+    this.doc.text(`Cattle ID: ${cattleData.cattle_id}`, pageWidth / 2, 30, { align: 'center' })
     
     // Date
     this.doc.setFontSize(10)
-    this.doc.text(`${this.t.generatedOn}: ${new Date().toLocaleDateString('en-US', { 
+    this.doc.text(`Generated On: ${new Date().toLocaleDateString('en-US', { 
       year: 'numeric', 
       month: 'long', 
       day: 'numeric',
@@ -71,7 +137,7 @@ export class ReportGenerator {
     // Section title
     this.doc.setFontSize(16)
     this.doc.setFont(undefined, 'bold')
-    this.doc.text(this.t.cattleInformation.toUpperCase(), 20, yPos)
+    this.doc.text(this.t.cattleInfo.toUpperCase(), 20, yPos)
     yPos += 15
     
     // Basic info - Use actual cattle data from Supabase
@@ -94,9 +160,174 @@ export class ReportGenerator {
     })
   }
 
+  addPredictionsSection(predictions) {
+    let yPos = 180
+    
+    this.doc.setFontSize(16)
+    this.doc.setFont(undefined, 'bold')
+    this.doc.text(this.t.predictionResults.toUpperCase(), 20, yPos)
+    yPos += 15
+    
+    // Get milk and disease predictions from the data structure
+    const milkPredictions = predictions?.allPredictions?.filter(p => p.prediction_type === 'milk_yield') || []
+    const diseasePredictions = predictions?.allPredictions?.filter(p => p.prediction_type === 'disease') || []
+    
+    // Milk Yield Prediction Section
+    if (milkPredictions.length > 0 || predictions?.milkYield) {
+      const milkPrediction = milkPredictions[0] || null
+      const milkData = predictions?.milkYield || milkPrediction?.prediction_result
+      
+      this.doc.setFontSize(14)
+      this.doc.setFont(undefined, 'bold')
+      this.doc.text(this.t.milkYieldPrediction.toUpperCase(), 20, yPos)
+      yPos += 10
+      
+      this.doc.setFontSize(11)
+      this.doc.setFont(undefined, 'normal')
+      
+      if (milkData) {
+        // Prediction Results
+        this.doc.text(`Predicted Daily Yield: ${milkData.predicted_milk_yield || milkData.prediction || 'N/A'} liters`, 25, yPos)
+        yPos += 8
+        this.doc.text(`Confidence Level: ${milkData.confidence ? (milkData.confidence * 100).toFixed(1) : 'N/A'}%`, 25, yPos)
+        yPos += 8
+        
+        if (milkPrediction?.created_at) {
+          this.doc.text(`Prediction Date: ${new Date(milkPrediction.created_at).toLocaleString()}`, 25, yPos)
+          yPos += 8
+        }
+        
+        // Input Data Used for Prediction
+        if (milkPrediction?.input_data) {
+          this.doc.setFont(undefined, 'bold')
+          this.doc.text('Input Data Used for Prediction:', 25, yPos)
+          yPos += 6
+          this.doc.setFont(undefined, 'normal')
+          
+          const input = milkPrediction.input_data
+          if (input.breed) this.doc.text(`• Breed: ${input.breed}`, 30, yPos), yPos += 6
+          if (input.age_months) this.doc.text(`• Age: ${input.age_months} months (${Math.floor(input.age_months / 12)} years)`, 30, yPos), yPos += 6
+          if (input.weight_kg) this.doc.text(`• Weight: ${input.weight_kg} kg`, 30, yPos), yPos += 6
+          if (input.feed_type) this.doc.text(`• Feed Type: ${input.feed_type}`, 30, yPos), yPos += 6
+          if (input.feed_quantity_kg) this.doc.text(`• Feed Quantity: ${input.feed_quantity_kg} kg/day`, 30, yPos), yPos += 6
+          if (input.grazing_hours) this.doc.text(`• Grazing Hours: ${input.grazing_hours} hours/day`, 30, yPos), yPos += 6
+          if (input.body_temperature) this.doc.text(`• Body Temperature: ${input.body_temperature}°C`, 30, yPos), yPos += 6
+          if (input.heart_rate) this.doc.text(`• Heart Rate: ${input.heart_rate} BPM`, 30, yPos), yPos += 6
+          if (input.temperature) this.doc.text(`• Environmental Temperature: ${input.temperature}°C`, 30, yPos), yPos += 6
+          if (input.humidity) this.doc.text(`• Humidity: ${input.humidity}%`, 30, yPos), yPos += 6
+        }
+      } else {
+        this.doc.text('No milk yield prediction data available', 25, yPos)
+        yPos += 8
+      }
+      yPos += 10
+    }
+    
+    // Disease Detection Section
+    if (diseasePredictions.length > 0 || predictions?.disease) {
+      const diseasePrediction = diseasePredictions[0] || null
+      const diseaseData = predictions?.disease || diseasePrediction?.prediction_result
+      
+      this.doc.setFontSize(14)
+      this.doc.setFont(undefined, 'bold')
+      this.doc.text(this.t.diseaseDetection.toUpperCase(), 20, yPos)
+      yPos += 10
+      
+      this.doc.setFontSize(11)
+      this.doc.setFont(undefined, 'normal')
+      
+      if (diseaseData) {
+        // Disease Prediction Results
+        this.doc.text(`Predicted Disease: ${diseaseData.predicted_disease || 'N/A'}`, 25, yPos)
+        yPos += 8
+        this.doc.text(`Risk Level: ${diseaseData.risk_level || 'N/A'}`, 25, yPos)
+        yPos += 8
+        this.doc.text(`Confidence: ${diseaseData.confidence ? (diseaseData.confidence * 100).toFixed(1) : 'N/A'}%`, 25, yPos)
+        yPos += 8
+        
+        if (diseasePrediction?.created_at) {
+          this.doc.text(`Prediction Date: ${new Date(diseasePrediction.created_at).toLocaleString()}`, 25, yPos)
+          yPos += 8
+        }
+        
+        // Health Metrics Input Data
+        if (diseasePrediction?.input_data) {
+          this.doc.setFont(undefined, 'bold')
+          this.doc.text('Health Metrics Used for Analysis:', 25, yPos)
+          yPos += 6
+          this.doc.setFont(undefined, 'normal')
+          
+          const input = diseasePrediction.input_data
+          if (input.white_blood_cells) this.doc.text(`• White Blood Cells: ${input.white_blood_cells} cells/μL`, 30, yPos), yPos += 6
+          if (input.somatic_cell_count) this.doc.text(`• Somatic Cell Count: ${input.somatic_cell_count} cells/mL`, 30, yPos), yPos += 6
+          if (input.rumen_ph) this.doc.text(`• Rumen pH: ${input.rumen_ph}`, 30, yPos), yPos += 6
+          if (input.rumen_temperature) this.doc.text(`• Rumen Temperature: ${input.rumen_temperature}°C`, 30, yPos), yPos += 6
+          if (input.lameness_score) this.doc.text(`• Lameness Score: ${input.lameness_score}/5`, 30, yPos), yPos += 6
+          if (input.appetite_score) this.doc.text(`• Appetite Score: ${input.appetite_score}/5`, 30, yPos), yPos += 6
+          if (input.coat_condition) this.doc.text(`• Coat Condition: ${input.coat_condition}/5`, 30, yPos), yPos += 6
+          if (input.udder_swelling) this.doc.text(`• Udder Swelling Level: ${input.udder_swelling}/3`, 30, yPos), yPos += 6
+        }
+      } else {
+        this.doc.text('No disease prediction data available', 25, yPos)
+        yPos += 8
+      }
+      yPos += 10
+    }
+    
+    // Health Score Analysis
+    if (predictions?.cattle?.healthScore) {
+      const healthScore = predictions.cattle.healthScore
+      
+      this.doc.setFontSize(14)
+      this.doc.setFont(undefined, 'bold')
+      this.doc.text(this.t.healthMetrics.toUpperCase(), 20, yPos)
+      yPos += 10
+      
+      this.doc.setFontSize(11)
+      this.doc.setFont(undefined, 'normal')
+      this.doc.text(`Overall Health Score: ${healthScore}%`, 25, yPos)
+      yPos += 8
+      
+      // Health status interpretation
+      let healthStatus = 'Poor'
+      if (healthScore >= 90) healthStatus = 'Excellent'
+      else if (healthScore >= 80) healthStatus = 'Good'
+      else if (healthScore >= 70) healthStatus = 'Fair'
+      else if (healthScore >= 60) healthStatus = 'Below Average'
+      
+      this.doc.text(`Health Status: ${healthStatus}`, 25, yPos)
+      yPos += 8
+      
+      // Add health recommendations based on score
+      if (healthScore < 70) {
+        this.doc.text('⚠️ Health concerns detected - veterinary consultation recommended', 25, yPos)
+        yPos += 8
+      }
+      yPos += 10
+    }
+    
+    // Summary of all predictions
+    if (predictions?.allPredictions && predictions.allPredictions.length > 0) {
+      this.doc.setFontSize(14)
+      this.doc.setFont(undefined, 'bold')
+      this.doc.text('PREDICTION SUMMARY', 20, yPos)
+      yPos += 10
+      
+      this.doc.setFontSize(11)
+      this.doc.setFont(undefined, 'normal')
+      this.doc.text(`Total Predictions Generated: ${predictions.allPredictions.length}`, 25, yPos)
+      yPos += 8
+      
+      predictions.allPredictions.forEach((pred, index) => {
+        const date = new Date(pred.created_at).toLocaleDateString()
+        this.doc.text(`${index + 1}. ${pred.prediction_type.toUpperCase()} - ${date}`, 25, yPos)
+        yPos += 6
+      })
+    }
+  }
 
   addRecommendations(predictions) {
-    let yPos = 180
+    let yPos = 260
     
     // Check if we need a new page
     if (yPos > 250) {
@@ -263,66 +494,102 @@ export class ReportGenerator {
   }
 
   // Save report to Supabase
-  async saveReportToDatabase(userId, cattleId, reportData, pdfBlob) {
+  async generateFarmReport(userId, language = 'en') {
+    console.log('ReportGenerator: Starting farm report generation for user:', userId)
+    
     try {
-      // Upload PDF to Supabase Storage (if storage is configured)
-      let pdfUrl = null
+      // Import CattleDataManager to get dynamic data
+      const { CattleDataManager } = await import('./cattleDataManager')
       
-      // Insert report metadata into database
-      const { data, error } = await supabase
-        .from('reports')
-        .insert({
-          user_id: userId,
-          cattle_id: cattleId,
-          report_type: 'comprehensive',
-          report_data: reportData,
-          pdf_url: pdfUrl
-        })
-        .select()
+      // Fetch all cattle data with predictions from Supabase
+      const allCattleData = await CattleDataManager.getCattleWithPredictions(userId)
+      console.log('ReportGenerator: Fetched dynamic cattle data:', allCattleData)
       
-      if (error) throw error
+      if (!allCattleData || allCattleData.length === 0) {
+        console.log('ReportGenerator: No cattle data found for user')
+        throw new Error('No cattle data found for this user. Please add cattle data first.')
+      }
       
-      return data[0]
+      // Initialize PDF
+      this.doc = new jsPDF()
+      this.t = translations[language] || translations.en
+      
+      // Add report sections with dynamic data
+      this.addReportHeader()
+      this.addFarmSummary(allCattleData)
+      this.addProductionAnalysis(allCattleData)
+      this.addHealthOverview(allCattleData)
+      this.addCattleSummaryTable(allCattleData)
+      this.addFarmRecommendations(allCattleData)
+      
+      console.log('ReportGenerator: Farm report generated successfully with dynamic data')
+      return this.doc
     } catch (error) {
-      console.error('Error saving report to database:', error)
+      console.error('ReportGenerator: Error generating farm report:', error)
       throw error
     }
   }
 
   // Generate comprehensive dashboard report for all cattle
   async generateDashboardReport(allCattleData, userId) {
-    this.doc = new jsPDF()
-    
-    // Set up document properties
-    this.doc.setProperties({
-      title: `${this.t.farmDashboardReport} - ${new Date().toLocaleDateString()}`,
-      subject: this.t.completeFarmAnalysis,
-      author: this.t.dairyCattleMonitoring,
-      creator: this.t.aiPoweredPlatform
-    })
+    try {
+      console.log('ReportGenerator: Starting dashboard report generation')
+      console.log('ReportGenerator: Cattle data received:', allCattleData)
+      
+      if (!allCattleData || allCattleData.length === 0) {
+        throw new Error('No cattle data available for report generation')
+      }
+      
+      console.log('Creating new jsPDF instance...')
+      this.doc = new jsPDF()
+      console.log('jsPDF instance created successfully')
+      
+      // Set up document properties
+      this.doc.setProperties({
+        title: `Farm Dashboard Report - ${new Date().toLocaleDateString()}`,
+        subject: 'Complete Farm Analysis',
+        author: 'Dairy Cattle Monitoring System',
+        creator: 'AI-Powered Platform',
+        reportDisclaimer: 'This report is generated by AI and should be used for guidance only. Consult a veterinarian for medical decisions.',
+        copyrightNotice: '© 2024 Dairy Cattle Monitoring System - AI-Powered Platform'
+      })
+      console.log('Document properties set')
 
-    // Add header
-    this.addDashboardHeader(allCattleData.length)
-    
-    // Add farm summary
-    this.addFarmSummary(allCattleData)
-    
-    // Add production analysis
-    this.addProductionAnalysis(allCattleData)
-    
-    // Add health overview
-    this.addHealthOverview(allCattleData)
-    
-    // Add individual cattle summary
-    this.addCattleSummaryTable(allCattleData)
-    
-    // Add recommendations
-    this.addFarmRecommendations(allCattleData)
-    
-    // Add footer
-    this.addFooter()
-    
-    return this.doc
+      // Add header
+      console.log('Adding dashboard header...')
+      this.addDashboardHeader(allCattleData.length)
+      
+      // Add farm summary
+      console.log('Adding farm summary...')
+      this.addFarmSummary(allCattleData)
+      
+      // Add production analysis
+      console.log('Adding production analysis...')
+      this.addProductionAnalysis(allCattleData)
+      
+      // Add health overview
+      console.log('Adding health overview...')
+      this.addHealthOverview(allCattleData)
+      
+      // Add individual cattle summary
+      console.log('Adding cattle summary table...')
+      this.addCattleSummaryTable(allCattleData)
+      
+      // Add recommendations
+      console.log('Adding farm recommendations...')
+      this.addFarmRecommendations(allCattleData)
+      
+      // Add footer
+      console.log('Adding footer...')
+      this.addFooter()
+      
+      console.log('ReportGenerator: Dashboard report generated successfully')
+      return this.doc
+    } catch (error) {
+      console.error('Error in generateDashboardReport:', error)
+      console.error('Error details:', error.message, error.stack)
+      throw new Error(`Report generation failed: ${error.message}`)
+    }
   }
 
   addDashboardHeader(totalCattle) {
@@ -331,16 +598,16 @@ export class ReportGenerator {
     // Title
     this.doc.setFontSize(20)
     this.doc.setFont(undefined, 'bold')
-    this.doc.text(this.t.farmDashboardReport.toUpperCase(), pageWidth / 2, 20, { align: 'center' })
+    this.doc.text('FARM DASHBOARD REPORT', pageWidth / 2, 20, { align: 'center' })
     
     // Subtitle
     this.doc.setFontSize(14)
     this.doc.setFont(undefined, 'normal')
-    this.doc.text(`${this.t.completeFarmAnalysis} - ${totalCattle} ${this.t.cattle}`, pageWidth / 2, 30, { align: 'center' })
+    this.doc.text(`Complete Farm Analysis - ${totalCattle} Cattle`, pageWidth / 2, 30, { align: 'center' })
     
     // Date
     this.doc.setFontSize(10)
-    this.doc.text(`${this.t.generatedOn}: ${new Date().toLocaleDateString('en-US', { 
+    this.doc.text(`Generated On: ${new Date().toLocaleDateString('en-US', { 
       year: 'numeric', 
       month: 'long', 
       day: 'numeric',
@@ -362,19 +629,25 @@ export class ReportGenerator {
     yPos += 15
     
     const totalCattle = allCattleData.length
+    
+    // Calculate milk production from actual AI predictions (dailyYield from cattleDataManager)
     const totalMilkProduction = allCattleData.reduce((sum, cattle) => 
-      sum + (parseFloat(cattle.predicted_milk_yield) || 0), 0)
-    const avgYieldPerCattle = totalMilkProduction / totalCattle
+      sum + (parseFloat(cattle.dailyYield) || 0), 0)
+    const avgYieldPerCattle = totalCattle > 0 ? totalMilkProduction / totalCattle : 0
     const projectedMonthly = totalMilkProduction * 30
     
-    // Get most common breed
+    // Get most common breed from actual cattle data
     const breedCounts = {}
     allCattleData.forEach(cattle => {
       const breed = cattle.breed || 'Unknown'
       breedCounts[breed] = (breedCounts[breed] || 0) + 1
     })
-    const mostCommonBreed = Object.keys(breedCounts).reduce((a, b) => 
-      breedCounts[a] > breedCounts[b] ? a : b)
+    const mostCommonBreed = Object.keys(breedCounts).length > 0 ? 
+      Object.keys(breedCounts).reduce((a, b) => breedCounts[a] > breedCounts[b] ? a : b) : 'Unknown'
+    
+    // Calculate average age from cattle data
+    const avgAge = allCattleData.length > 0 ? 
+      allCattleData.reduce((sum, cattle) => sum + (cattle.age_months || 0), 0) / allCattleData.length : 0
     
     this.doc.setFontSize(11)
     this.doc.setFont(undefined, 'normal')
@@ -382,7 +655,7 @@ export class ReportGenerator {
     const summaryData = [
       [`${this.t.totalCattle}: ${totalCattle}`, `${this.t.dailyMilkProduction}: ${totalMilkProduction.toFixed(1)}L`],
       [`${this.t.averageYieldPerCattle}: ${avgYieldPerCattle.toFixed(1)}L`, `${this.t.projectedMonthlyProduction}: ${projectedMonthly.toFixed(0)}L`],
-      [`${this.t.mostCommonBreed}: ${mostCommonBreed}`, ``]
+      [`${this.t.mostCommonBreed}: ${mostCommonBreed}`, `Average ${this.t.age}: ${Math.floor(avgAge / 12)} years`]
     ]
     
     summaryData.forEach(([label, value]) => {
@@ -402,24 +675,25 @@ export class ReportGenerator {
     this.doc.text(this.t.productionAnalysis.toUpperCase(), 20, yPos)
     yPos += 15
     
-    // Categorize cattle by production levels
+    // Categorize cattle by production levels using actual AI predictions (dailyYield)
     const lowProducers = allCattleData.filter(cattle => 
-      parseFloat(cattle.predicted_milk_yield) < 15).length
+      parseFloat(cattle.dailyYield) < 15).length
     const mediumProducers = allCattleData.filter(cattle => {
-      const milkYield = parseFloat(cattle.predicted_milk_yield)
+      const milkYield = parseFloat(cattle.dailyYield)
       return milkYield >= 15 && milkYield <= 25
     }).length
     const highProducers = allCattleData.filter(cattle => 
-      parseFloat(cattle.predicted_milk_yield) > 25).length
+      parseFloat(cattle.dailyYield) > 25).length
     
-    const efficiency = ((highProducers / allCattleData.length) * 100).toFixed(1)
+    const efficiency = allCattleData.length > 0 ? 
+      ((highProducers / allCattleData.length) * 100).toFixed(1) : 0
     
     this.doc.setFontSize(11)
     this.doc.setFont(undefined, 'normal')
     
     const productionData = [
       [`${this.t.lowProducers}: ${lowProducers}`, `${this.t.mediumProducers}: ${mediumProducers}`],
-      [`${this.t.highProducers}: ${highProducers}`, `${this.t.productionEfficiency}: ${efficiency}${this.t.highProducersPercent}`]
+      [`${this.t.highProducers}: ${highProducers}`, `${this.t.productionEfficiency}: ${efficiency}%`]
     ]
     
     productionData.forEach(([label, value]) => {
@@ -439,22 +713,27 @@ export class ReportGenerator {
     this.doc.text(this.t.healthOverview.toUpperCase(), 20, yPos)
     yPos += 15
     
-    // Categorize cattle by health scores
+    // Categorize cattle by health scores from actual data
     const excellentHealth = allCattleData.filter(cattle => 
-      parseFloat(cattle.health_score) >= 90).length
+      parseFloat(cattle.healthScore) >= 90).length
     const goodHealth = allCattleData.filter(cattle => {
-      const score = parseFloat(cattle.health_score)
+      const score = parseFloat(cattle.healthScore)
       return score >= 80 && score < 90
     }).length
     const fairHealth = allCattleData.filter(cattle => {
-      const score = parseFloat(cattle.health_score)
+      const score = parseFloat(cattle.healthScore)
       return score >= 60 && score < 80
     }).length
     const poorHealth = allCattleData.filter(cattle => 
-      parseFloat(cattle.health_score) < 60).length
+      parseFloat(cattle.healthScore) < 60).length
     
-    const avgHealthScore = allCattleData.reduce((sum, cattle) => 
-      sum + (parseFloat(cattle.health_score) || 0), 0) / allCattleData.length
+    const avgHealthScore = allCattleData.length > 0 ? 
+      allCattleData.reduce((sum, cattle) => sum + (parseFloat(cattle.healthScore) || 0), 0) / allCattleData.length : 0
+    
+    // Count disease predictions from AI model
+    const healthyCattle = allCattleData.filter(cattle => 
+      cattle.diseaseStatus === 'Healthy' || cattle.diseaseStatus === 'No Disease').length
+    const diseasedCattle = allCattleData.length - healthyCattle
     
     this.doc.setFontSize(11)
     this.doc.setFont(undefined, 'normal')
@@ -462,7 +741,7 @@ export class ReportGenerator {
     const healthData = [
       [`${this.t.excellentHealth}: ${excellentHealth}`, `${this.t.goodHealth}: ${goodHealth}`],
       [`${this.t.fairHealth}: ${fairHealth}`, `${this.t.poorHealth}: ${poorHealth}`],
-      [`${this.t.overallHealthRate}: ${avgHealthScore.toFixed(1)}/100`, ``]
+      [`${this.t.overallHealthRate}: ${avgHealthScore.toFixed(1)}/100`, `${this.t.healthyCattle}: ${healthyCattle}`]
     ]
     
     healthData.forEach(([label, value]) => {
@@ -496,10 +775,10 @@ export class ReportGenerator {
     
     // Draw line under headers
     this.doc.setLineWidth(0.3)
-    this.doc.line(20, yPos - 2, 190, yPos - 2)
+    this.doc.line(20, yPos - 2, 210, yPos - 2)
     yPos += 5
     
-    // Table rows
+    // Table rows - using actual cattle data
     this.doc.setFont(undefined, 'normal')
     allCattleData.forEach((cattle, index) => {
       if (yPos > 270) { // Start new page if needed
@@ -510,17 +789,16 @@ export class ReportGenerator {
       const cattleId = cattle.cattle_id?.substring(0, 8) || `C${index + 1}`
       const breed = cattle.breed?.substring(0, 8) || 'N/A'
       const age = cattle.age_months ? `${Math.floor(cattle.age_months / 12)}y` : 'N/A'
-      const milkYield = cattle.predicted_milk_yield ? `${cattle.predicted_milk_yield.toFixed(1)}L` : '0.0L'
-      const health = cattle.health_score ? cattle.health_score.toFixed(0) : '0'
+      const milkYield = cattle.dailyYield ? `${parseFloat(cattle.dailyYield).toFixed(1)}L` : '0.0L'
+      const health = cattle.healthScore ? parseFloat(cattle.healthScore).toFixed(0) : '0'
       const healthStatus = health >= 80 ? this.t.good : health >= 60 ? this.t.fair : this.t.poor
       
       this.doc.text(cattleId, 20, yPos)
       this.doc.text(breed, 50, yPos)
-      this.doc.text(age, 80, yPos)
-      this.doc.text(milkYield, 100, yPos)
+      this.doc.text(age, 90, yPos)
+      this.doc.text(milkYield, 120, yPos)
       this.doc.text(health, 160, yPos)
       this.doc.text(healthStatus, 190, yPos)
-      this.doc.text(status, 160, yPos)
       yPos += 8
     })
   }
@@ -532,46 +810,75 @@ export class ReportGenerator {
     
     this.doc.setFontSize(16)
     this.doc.setFont(undefined, 'bold')
-    this.doc.text('FARM RECOMMENDATIONS', 20, yPos)
+    this.doc.text(this.t.farmRecommendations.toUpperCase(), 20, yPos)
     yPos += 15
     
-    this.doc.setFontSize(12)
+    // Generate recommendations based on actual data
+    const recommendations = this.generateRecommendations(cattleData)
+    
+    this.doc.setFontSize(11)
     this.doc.setFont(undefined, 'normal')
-    
-    const recommendations = []
-    
-    // Production recommendations
-    const totalDailyYield = cattleData.reduce((sum, cattle) => sum + (cattle.dailyYield || 0), 0)
-    const avgYield = cattleData.length > 0 ? totalDailyYield / cattleData.length : 0
-    
-    if (avgYield < 20) {
-      recommendations.push('• Consider improving overall feed quality and nutrition program')
-      recommendations.push('• Review feeding schedules and ensure consistent feed supply')
-    } else if (avgYield > 25) {
-      recommendations.push('• Excellent production levels! Maintain current management practices')
-      recommendations.push('• Monitor for metabolic disorders in high-producing cattle')
-    }
-    
-    // Health recommendations
-    const healthyCattle = cattleData.filter(cattle => (cattle.healthScore || 0) >= 80).length
-    const healthRate = cattleData.length > 0 ? (healthyCattle / cattleData.length) * 100 : 0
-    
-    if (healthRate < 70) {
-      recommendations.push('• Implement comprehensive health monitoring program')
-      recommendations.push('• Schedule veterinary consultation for herd health assessment')
-    }
-    
-    // General recommendations
-    recommendations.push('• Maintain detailed production and health records for each animal')
-    recommendations.push('• Implement regular body condition scoring')
-    recommendations.push('• Ensure adequate water supply and quality')
-    recommendations.push('• Review and optimize housing conditions for comfort')
-    recommendations.push('• Consider genetic improvement programs for future breeding')
     
     recommendations.forEach(rec => {
       this.doc.text(rec, 20, yPos, { maxWidth: 170 })
       yPos += 8
     })
+  }
+
+  generateRecommendations(cattleData) {
+    const recommendations = []
+    
+    if (cattleData.length === 0) {
+      recommendations.push('• No cattle data available for recommendations.')
+      return recommendations
+    }
+    
+    // Calculate statistics
+    const totalCattle = cattleData.length
+    const avgYield = cattleData.reduce((sum, cattle) => sum + (cattle.dailyYield || 0), 0) / totalCattle
+    const avgHealth = cattleData.reduce((sum, cattle) => sum + (cattle.healthScore || 0), 0) / totalCattle
+    const lowProducers = cattleData.filter(cattle => (cattle.dailyYield || 0) < 15).length
+    const unhealthyCattle = cattleData.filter(cattle => (cattle.healthScore || 0) < 70).length
+    
+    // Production recommendations
+    if (avgYield < 20) {
+      recommendations.push('• Consider improving feed quality and quantity to increase milk production.')
+      recommendations.push('• Review breeding program to include higher-yielding breeds.')
+    }
+    
+    if (lowProducers > totalCattle * 0.3) {
+      recommendations.push('• 30%+ of cattle are low producers. Focus on nutrition and health management.')
+    }
+    
+    // Health recommendations
+    if (avgHealth < 80) {
+      recommendations.push('• Overall herd health is below optimal. Implement regular health monitoring.')
+    }
+    
+    if (unhealthyCattle > 0) {
+      recommendations.push(`• ${unhealthyCattle} cattle need immediate health attention.`)
+      recommendations.push('• Schedule veterinary checkups for cattle with health scores below 70.')
+    }
+    
+    // General recommendations
+    recommendations.push('• Maintain consistent feeding schedules and monitor feed quality.')
+    recommendations.push('• Ensure adequate water supply and clean housing conditions.')
+    recommendations.push('• Regular AI predictions help optimize farm management decisions.')
+    
+    return recommendations
+  }
+
+  addFooter() {
+    const pageWidth = this.doc.internal.pageSize.width
+    const pageHeight = this.doc.internal.pageSize.height
+    
+    this.doc.setFontSize(8)
+    this.doc.setFont(undefined, 'italic')
+    this.doc.text('This report is generated by AI-powered cattle monitoring system for informational purposes.', 
+                  pageWidth / 2, pageHeight - 20, { align: 'center' })
+    
+    this.doc.setFont(undefined, 'normal')
+    this.doc.text('© 2024 Dairy Cattle Monitoring System', pageWidth / 2, pageHeight - 10, { align: 'center' })
   }
 
   // Download PDF
@@ -587,6 +894,27 @@ export class ReportGenerator {
       return this.doc.output('blob')
     }
     return null
+  }
+
+  // Save report to database
+  async saveReportToDatabase(userId, reportType, reportData, pdfBlob) {
+    try {
+      const { data, error } = await supabase
+        .from('reports')
+        .insert({
+          user_id: userId,
+          report_type: reportType,
+          report_data: reportData,
+          generated_at: new Date().toISOString()
+        })
+        .select()
+      
+      if (error) throw error
+      return data[0]
+    } catch (error) {
+      console.error('Error saving report to database:', error)
+      throw error
+    }
   }
 }
 

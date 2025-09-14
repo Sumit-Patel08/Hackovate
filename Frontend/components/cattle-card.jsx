@@ -72,40 +72,87 @@ export function CattleCard({ cattle, language = "en", userInputData = null }) {
     setIsGeneratingReport(true)
     
     try {
+      console.log('Starting individual cattle report generation...')
+      console.log('Cattle data for report:', cattle)
+      console.log('User ID:', user.id)
+      
+      // Create report generator instance with language (same as dashboard)
+      const reportGenerator = new ReportGenerator(language)
+      console.log('ReportGenerator created successfully')
+      
       // Fetch latest predictions from Supabase
       const predictions = await fetchCattleData(user.id, cattle.id)
+      console.log('Fetched predictions:', predictions)
       
-      // Create report generator instance
-      const reportGenerator = new ReportGenerator()
-      
-      // Generate PDF report
+      // Generate PDF report using the same pattern as dashboard
       const pdfDoc = await reportGenerator.generatePDFReport(
         cattle,
         predictions,
         userInputData
       )
+      console.log('Individual cattle report generated successfully')
       
-      // Save report to database
-      const reportData = {
-        cattle_info: cattle,
-        predictions: predictions,
-        user_input: userInputData,
-        generated_at: new Date().toISOString()
-      }
-      
-      await reportGenerator.saveReportToDatabase(
-        user.id,
-        cattle.id,
-        reportData,
-        reportGenerator.getPDFBlob()
-      )
+      // Generate filename with current date
+      const currentDate = new Date().toISOString().split('T')[0]
+      const filename = `cattle-${cattle.id}-report-${currentDate}.pdf`
+      console.log('Generated filename:', filename)
       
       // Download the PDF
-      reportGenerator.downloadPDF(`cattle-${cattle.id}-report-${new Date().toISOString().split('T')[0]}.pdf`)
+      reportGenerator.downloadPDF(filename)
+      console.log('PDF download initiated')
+      
+      // Save report to database (optional - don't fail if this errors)
+      try {
+        const reportData = {
+          cattle_info: cattle,
+          predictions: predictions,
+          user_input: userInputData,
+          generated_at: new Date().toISOString()
+        }
+        
+        await reportGenerator.saveReportToDatabase(
+          user.id,
+          `cattle_${cattle.id}`,
+          reportData,
+          reportGenerator.getPDFBlob()
+        )
+        console.log('Report metadata saved to database')
+      } catch (dbError) {
+        console.error('Error saving report metadata (non-critical):', dbError)
+        // Don't show error to user as the PDF was still generated successfully
+      }
+      
+      alert(`Individual cattle report generated successfully! Downloaded as ${filename}`)
       
     } catch (error) {
-      console.error('Error generating report:', error)
-      alert('Failed to generate report. Please try again.')
+      console.error('=== INDIVIDUAL CATTLE REPORT ERROR ===')
+      console.error('Full error object:', error)
+      console.error('Error message:', error.message)
+      console.error('Error stack:', error.stack)
+      console.error('Cattle data:', cattle)
+      console.error('User object:', user)
+      
+      // More specific error messages (same as dashboard)
+      if (error.message?.includes('jsPDF')) {
+        alert('PDF generation library error. Please refresh the page and try again.')
+      } else if (error.message?.includes('No cattle data')) {
+        alert('No cattle data available for report. Please try again.')
+      } else if (error.message?.includes('translations')) {
+        alert('Translation error. Trying with default language...')
+        // Retry with English
+        try {
+          const reportGenerator = new ReportGenerator('en')
+          const pdfDoc = await reportGenerator.generatePDFReport(cattle, predictions, userInputData)
+          const filename = `cattle-${cattle.id}-report-${new Date().toISOString().split('T')[0]}.pdf`
+          reportGenerator.downloadPDF(filename)
+          alert(`Report generated successfully in English! Downloaded as ${filename}`)
+        } catch (retryError) {
+          console.error('Retry with English also failed:', retryError)
+          alert('Failed to generate report. Please check console for details.')
+        }
+      } else {
+        alert(`Failed to generate report: ${error.message}. Please check console for details.`)
+      }
     } finally {
       setIsGeneratingReport(false)
     }

@@ -653,17 +653,27 @@ export default function DairyDashboard() {
     }
 
     try {
+      console.log('Starting report generation...')
+      console.log('Cattle data for report:', cattleData)
+      console.log('User ID:', user.id)
+      console.log('Language:', language)
+      
       const reportGenerator = new ReportGenerator(language)
+      console.log('ReportGenerator created successfully')
+      
       const doc = await reportGenerator.generateDashboardReport(cattleData, user.id)
+      console.log('Dashboard report generated successfully')
       
       // Generate filename with current date
       const currentDate = new Date().toISOString().split('T')[0]
       const filename = `farm-dashboard-report-${currentDate}.pdf`
+      console.log('Generated filename:', filename)
       
       // Download the PDF
       reportGenerator.downloadPDF(filename)
+      console.log('PDF download initiated')
       
-      // Save report metadata to database
+      // Save report metadata to database (optional - don't fail if this errors)
       try {
         const reportData = {
           total_cattle: cattleData.length,
@@ -674,15 +684,42 @@ export default function DairyDashboard() {
         }
         
         await reportGenerator.saveReportToDatabase(user.id, 'dashboard', reportData, reportGenerator.getPDFBlob())
+        console.log('Report metadata saved to database')
       } catch (dbError) {
-        console.error('Error saving report metadata:', dbError)
+        console.error('Error saving report metadata (non-critical):', dbError)
         // Don't show error to user as the PDF was still generated successfully
       }
       
       alert(`Dashboard report generated successfully! Downloaded as ${filename}`)
     } catch (error) {
-      console.error('Error generating dashboard report:', error)
-      alert('Failed to generate dashboard report. Please try again.')
+      console.error('=== REPORT GENERATION ERROR ===')
+      console.error('Full error object:', error)
+      console.error('Error message:', error.message)
+      console.error('Error stack:', error.stack)
+      console.error('Cattle data length:', cattleData?.length || 0)
+      console.error('User object:', user)
+      
+      // More specific error messages
+      if (error.message?.includes('jsPDF')) {
+        alert('PDF generation library error. Please refresh the page and try again.')
+      } else if (error.message?.includes('No cattle data')) {
+        alert('No cattle data available for report. Please add cattle data first.')
+      } else if (error.message?.includes('translations')) {
+        alert('Translation error. Trying with default language...')
+        // Retry with English
+        try {
+          const reportGenerator = new ReportGenerator('en')
+          const doc = await reportGenerator.generateDashboardReport(cattleData, user.id)
+          const filename = `farm-dashboard-report-${new Date().toISOString().split('T')[0]}.pdf`
+          reportGenerator.downloadPDF(filename)
+          alert(`Report generated successfully in English! Downloaded as ${filename}`)
+        } catch (retryError) {
+          console.error('Retry with English also failed:', retryError)
+          alert('Failed to generate report. Please check console for details.')
+        }
+      } else {
+        alert(`Failed to generate report: ${error.message}. Please check console for details.`)
+      }
     }
   }
 
